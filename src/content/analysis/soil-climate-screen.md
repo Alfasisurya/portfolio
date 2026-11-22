@@ -1,5 +1,5 @@
 ---
-title: "Soil and climate screening for a clicked location"
+title: "Agronomic Intelligence platform: soil and climate screening"
 date: "November 2026"
 year: 2026
 category: "Geospatial analysis"
@@ -7,13 +7,13 @@ topics:
   - "Geospatial analysis"
   - "Climate and environmental data"
   - "Agricultural modelling"
-summary: "Combining a global soil grid, a rainfall climatology, and a seasonal forecast to screen a single location in Indonesia."
+summary: "How the Agronomic Intelligence platform combines a global soil grid, a rainfall climatology, and a seasonal forecast to screen any location in Indonesia."
 question: "From a single coordinate, what can global soil and climate data tell us, and where do they fall short?"
 status: "exploratory"
 featured: true
 ---
 
-This is an exploratory analysis behind the Agronomic Intelligence tool. It has not been peer reviewed.
+This page explains the method inside the [Agronomic Intelligence platform](../../projects/agronomic-intelligence/index.html): how a single click on the map becomes a soil and climate screen. It is a working method, not a peer-reviewed paper.
 
 ## Data
 

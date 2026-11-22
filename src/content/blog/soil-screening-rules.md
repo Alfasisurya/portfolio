@@ -1,14 +1,13 @@
 ---
-title: "Constraint rules in the soil and climate screen"
-date: "November 2026"
-year: 2026
+title: "How Agronomic Intelligence flags fertile and infertile land"
+date: "2026-11-22"
 topics:
-  - "Geospatial processing"
-  - "Agricultural data science"
-summary: "The rules Agronomic Intelligence uses to flag a location as fertile or infertile."
+  - "Agronomic Intelligence"
+  - "Geospatial analysis"
+summary: "The constraint rules behind the fertile or infertile flag in the Agronomic Intelligence platform."
 ---
 
-Agronomic Intelligence labels a clicked location with a simple rule set. The label is a screening aid, not an FAO land-suitability class.
+The [Agronomic Intelligence platform](../../projects/agronomic-intelligence/index.html) labels a clicked location with a simple rule set. The label is a screening aid, not an FAO land-suitability class.
 
 A location is fertile when none of the main constraints apply. It is infertile when any of the following is true for a major soil component (at least 25 percent of the mapping unit) or for the topsoil:
 

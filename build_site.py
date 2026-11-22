@@ -23,7 +23,7 @@ NAV = [
     ("analysis.html", "Analytical Work"),
     ("publications.html", "Publications"),
     ("patents.html", "Patents"),
-    ("notes.html", "Notes"),
+    ("blog.html", "Blog"),
     ("contact.html", "Contact"),
 ]
 
@@ -160,7 +160,7 @@ def layout(title, description, depth, active, body):
   <meta name="description" content="{esc(description)}">
   <meta name="author" content="{esc(FULL)}">
   <link rel="icon" href="{href(depth, "favicon.svg")}">
-  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=5">
+  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=6">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
@@ -218,25 +218,47 @@ def requests_quote(title):
     return quote(f'"{title}" Adhiwibawa')
 
 
+MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+          "August", "September", "October", "November", "December"]
+
+
+def nice_date(value):
+    match = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})", str(value))
+    if not match:
+        return str(value)
+    year, month, day = match.groups()
+    return f"{int(day)} {MONTHS[int(month) - 1]} {year}"
+
+
+def patent_link(item):
+    url = item.get("url")
+    if url and "pdki-indonesia" in url:
+        return url, "PDKI record (DJKI)"
+    if url and "/patent/" in url:
+        return url, "Google Patents"
+    return "https://patents.google.com/?q=" + requests_quote(item.get("number", item["title"])), "Search Google Patents"
+
+
 def entry_list(items, depth, section):
     rows = []
     for item in items:
         page = href(depth, f"{section}/{item['slug']}/index.html")
         year = item.get("year") or item.get("period") or ""
-        kicker = item.get("type") or item.get("category") or item.get("status") or item.get("jurisdiction") or "Note"
+        kicker = item.get("type") or item.get("category") or item.get("status") or item.get("jurisdiction") or ""
+        if section == "blog":
+            kicker = nice_date(item.get("date", ""))
         summary = item.get("summary") or item.get("venue") or ""
         extra = ""
         if section == "publications":
             bits = "".join(f'<a href="{esc(url)}">{esc(label)}</a>' for url, label in paper_links(item))
             extra = f'<p class="out-links">{bits}</p>'
         if section == "patents":
-            url = item.get("url") or "https://patents.google.com/?q=" + requests_quote(item.get("number", item["title"]))
-            label = "Google Patents" if item.get("url") and "/patent/" in item["url"] else "Search Google Patents"
+            url, label = patent_link(item)
             extra = f'<p class="out-links"><a href="{esc(url)}">{label}</a></p>'
         rows.append(
             f'<li data-item data-year="{esc(year)}" data-topics="{"|".join(esc(t) for t in item.get("domains") or item.get("topics") or [])}" '
             f'data-text="{esc((item["title"] + " " + summary).lower())}">'
-            f'<div class="block-link"><span class="meta">{esc(year)}<br>{esc(kicker)}</span>'
+            f'<div class="block-link"><span class="meta">{esc(kicker) if section == "blog" else esc(year) + "<br>" + esc(kicker)}</span>'
             f'<span><h3><a href="{page}">{esc(item["title"])}</a></h3><p>{esc(summary)}</p>{extra}</span></div></li>'
         )
     return '<ul class="entry-list">' + "".join(rows) + "</ul>"
@@ -261,7 +283,10 @@ def build():
     projects = load("projects")
     analyses = load("analysis")
     patents = load("patents")
-    notes = load("articles")
+    posts = load("blog")
+    for item in posts:
+        item["year"] = str(item.get("date", ""))[:4]
+    posts.sort(key=lambda item: str(item.get("date", "")), reverse=True)
 
     if (ROOT / "public" / "images").exists():
         shutil.copytree(ROOT / "public" / "images", ROOT / "images", dirs_exist_ok=True)
@@ -327,6 +352,11 @@ def build():
       <p class="intro">Working analyses that have not been peer reviewed.</p>
       {entry_list(featured_analysis, 0, "analysis")}
       <p><a href="analysis.html">All analytical work</a></p>
+    </div></section>
+    <section class="section"><div class="wrap">
+      <p class="kicker">Blog</p><h2>Latest writing</h2>
+      {entry_list(posts[:3], 0, "blog")}
+      <p><a href="blog.html">All blog posts</a></p>
     </div></section>
     <section class="section"><div class="wrap">
       <p class="kicker">Papers</p><h2>Selected publications</h2>
@@ -403,7 +433,7 @@ def build():
         topics = sorted({topic for item in items for topic in (item.get("domains") or item.get("topics") or [])})
         filters = (
             '<div class="filters" data-archive>'
-            f'<label>Search<input data-filter-search type="search" placeholder="Title, author, method"></label>'
+            f'<label>Search<input data-filter-search type="search" placeholder="Search titles and summaries"></label>'
             '<label>Year<select data-filter-year><option value="all">All years</option>'
             + "".join(f'<option value="{esc(year)}">{esc(year)}</option>' for year in years)
             + '</select></label><label>Topic<select data-filter-topic><option value="all">All topics</option>'
@@ -428,7 +458,7 @@ def build():
     )
     archive_page("projects.html", "Projects", "Research", "Research lines and tools, from leaf-image models and field instruments to geospatial screening.", projects, "projects")
     archive_page("analysis.html", "Analytical work", "Library", "Exploratory analyses and working studies. These have not been peer reviewed.", analyses, "analysis")
-    archive_page("notes.html", "Technical notes", "Notes", "Short write-ups on methods and the rules behind the tools.", notes, "articles")
+    archive_page("blog.html", "Blog", "Writing", "Articles about projects I am working on or have finished, and other public work.", posts, "blog")
 
     patent_rows = entry_list(patents, 0, "patents")
     patents_body = f'''<header class="page-head"><div class="wrap"><p class="kicker">Innovation</p><h1>Patents</h1>
@@ -471,8 +501,7 @@ def build():
         write(OUT / "analysis" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "analysis.html", body))
 
     for item in patents:
-        url = item.get("url") or "https://patents.google.com/?q=" + requests_quote(item.get("number", ""))
-        label = "Google Patents" if item.get("url") and "/patent/" in item["url"] else "Search Google Patents"
+        url, label = patent_link(item)
         facts = [
             ("Number", esc(item.get("number", ""))),
             ("Inventors", esc(", ".join(item.get("inventors") or []))),
@@ -485,10 +514,13 @@ def build():
         body = detail(item, 2, f'{item.get("jurisdiction")} · {item.get("status")}', facts)
         write(OUT / "patents" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "patents.html", body))
 
-    for item in notes:
-        facts = [("Date", esc(item.get("date", "")))]
-        body = detail(item, 2, "Note", facts)
-        write(OUT / "articles" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "notes.html", body))
+    for item in posts:
+        facts = [("Published", esc(nice_date(item.get("date", ""))))]
+        if item.get("topics"):
+            facts.append(("Topics", esc(", ".join(item["topics"]))))
+        body = detail(item, 2, "Blog", facts)
+        body = body.replace("</article>", '<div class="wrap-narrow"><p class="back-link"><a href="../../blog.html">← All blog posts</a></p></div></article>')
+        write(OUT / "blog" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "blog.html", body))
 
     print(f"pages written: {len(publications)} papers, {len(projects)} projects, {len(patents)} patents")
 
