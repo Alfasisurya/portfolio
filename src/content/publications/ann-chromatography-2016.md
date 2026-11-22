@@ -21,4 +21,4 @@ url: "https://doi.org/10.1063/1.4945074"
 featured: false
 ---
 
-The paper follows earlier probabilistic classification of the same kind of chromatographic data. The workspace copy is the AIP version. A performance figure is not taken from the citation page alone.
+The paper follows earlier probabilistic classification of the same kind of chromatographic data.

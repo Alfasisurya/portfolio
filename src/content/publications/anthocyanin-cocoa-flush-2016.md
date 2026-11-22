@@ -16,7 +16,6 @@ domains:
 summary: "Tests flush anthocyanin and chlorophyll as early markers separating fine-flavor and bulk cocoa genotypes."
 citation: "Pelita Perkebunan, 32(3), 171–180"
 featured: false
-note: "No DOI is printed on the workspace PDF."
 ---
 
 Flush samples came from the Kaliwining germplasm collection. Pigment analysis was done at the Ma Chung Research Center for Photosynthetic Pigments. The design was a completely randomized comparison of four fine-flavor and five bulk genotypes.

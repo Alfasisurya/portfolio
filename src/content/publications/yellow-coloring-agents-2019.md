@@ -17,7 +17,6 @@ citation: "Indonesian Journal of Natural Pigments, 1(2), 49–52"
 doi: "10.33479/ijnp.2019.01.2.49"
 url: "https://doi.org/10.33479/ijnp.2019.01.2.49"
 featured: false
-note: "The page range 49–52 is the range given on the Google Scholar profile."
 ---
 
 Peels of mangosteen, honey pineapple, and red dragon fruit were extracted in water, acetone, and ethanol. Ethanolic and acetone extracts of mangosteen peel were strong yellow and not statistically different. The ethanolic mangosteen extract had the lowest L* and the highest b*.

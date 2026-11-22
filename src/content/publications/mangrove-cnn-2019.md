@@ -19,4 +19,4 @@ url: "https://doi.org/10.1117/12.2503377"
 featured: true
 ---
 
-The leaves came from the northern coast of Probolinggo, East Java. The abstract says a field test distinguished the three species and describes the accuracy as high. It does not print a percentage, so none is added here. The authors note a later aim of identifying mangroves from a UAV.
+The leaves came from the northern coast of Probolinggo, East Java. A field test distinguished the three species with high accuracy. The authors note a later aim of identifying mangroves from a UAV.

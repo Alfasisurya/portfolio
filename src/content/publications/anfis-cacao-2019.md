@@ -16,7 +16,6 @@ domains:
 summary: "Compares ANFIS with ANN and Fuzzy-MLP for classifying fine-flavor and bulk cacao from leaf color."
 citation: "Romanian Journal of Information Science and Technology, 22(3–4), 272–283"
 featured: false
-note: "No DOI is printed on the first page of the workspace PDF."
 ---
 
 Fine-flavor and bulk cacao are usually separated only after years of growth. The paper uses leaf color, which earlier work had linked to the two groups, and reports that the ANFIS classifier was more robust than ANN and Fuzzy-MLP on the experiment described.

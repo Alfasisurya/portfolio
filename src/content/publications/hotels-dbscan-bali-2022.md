@@ -17,4 +17,4 @@ url: "https://doi.org/10.20885/EKSAKTA.vol3.iss1.art4"
 featured: false
 ---
 
-The question is where hotels cluster, in the context of the tourism shock from COVID-19. Quadrant counts and Ripley's K test the point pattern. DBSCAN then forms the clusters. The PDF header names the journal EKSAKTA.
+The question is where hotels cluster, in the context of the tourism shock from COVID-19. Quadrant counts and Ripley's K test the point pattern. DBSCAN then forms the clusters.

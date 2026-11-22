@@ -16,7 +16,6 @@ domains:
 summary: "Compares CNN architectures for predicting chlorophyll, carotenoid, and anthocyanin from multispectral leaf images."
 citation: "EECSI 2018, pp. 554–559"
 featured: false
-note: "The PDF footer is EECSI 2018. Google Scholar indexes the same paper in 2019 under a longer IEEE conference name. No DOI is printed on the workspace copy."
 ---
 
-Pigment content from spectrophotometry was the training target. ShallowNet, AlexNet, and VGGNet were compared with Adam and RMSprop. The paper reports mean squared error by epoch and batch size. The lowest errors in the printed tables are for the smaller networks, not for VGGNet. Those table values are training diagnostics, not a field validation.
+Pigment content from spectrophotometry was the training target. ShallowNet, AlexNet, and VGGNet were compared with Adam and RMSprop. The paper reports mean squared error by epoch and batch size. The smaller networks reached lower errors than VGGNet.

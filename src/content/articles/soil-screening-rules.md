@@ -5,18 +5,18 @@ year: 2026
 topics:
   - "Geospatial processing"
   - "Agricultural data science"
-summary: "The screening rules written for the Agronomic Intelligence tool, kept separate from the peer-reviewed archive."
+summary: "The rules Agronomic Intelligence uses to flag a location as fertile or infertile."
 ---
 
-These rules are the ones written down in the November 2026 note. They label a clicked location. They are not an FAO land-suitability class.
+Agronomic Intelligence labels a clicked location with a simple rule set. The label is a screening aid, not an FAO land-suitability class.
 
-A location is marked fertile when none of the primary constraints fire. It is marked infertile when any of the following is true for a major component, meaning a share of at least 25 percent, or for the topsoil:
+A location is fertile when none of the main constraints apply. It is infertile when any of the following is true for a major soil component (at least 25 percent of the mapping unit) or for the topsoil:
 
-- A problem soil in the World Reference Base code: Histosol, Leptosol, Solonchak, Solonetz, Regosol, Arenosol, or Podzol.
-- Very shallow rooting, organic carbon of at least 18 percent, or coarse fragments of at least 60 percent.
-- Very poor drainage, organic carbon below 1 percent where the soil is not peat, or CEC below 5 cmolc kg⁻¹.
-- pH below 4.0 or above 8.5, aluminium saturation of at least 60 percent, ESP of at least 25 percent, or EC of at least 8 dS m⁻¹.
+- A problem soil in the World Reference Base: Histosol, Leptosol, Solonchak, Solonetz, Regosol, Arenosol, or Podzol.
+- Very shallow rooting, organic carbon of 18 percent or more, or coarse fragments of 60 percent or more.
+- Very poor drainage, organic carbon below 1 percent in a mineral soil, or CEC below 5 cmolc kg⁻¹.
+- pH below 4.0 or above 8.5, aluminium saturation of 60 percent or more, ESP of 25 percent or more, or EC of 8 dS m⁻¹ or more.
 
-Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation stay visible beside the flag. A dry month is under 60 mm in the WorldClim year. A very wet year is over 3,000 mm.
+Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation are shown beside the flag. A dry month has less than 60 mm of rain in the WorldClim year, and a very wet year has more than 3,000 mm.
 
-The note is explicit that the flag can be wrong for a farm block, because the grid is coarse and a mapping unit can mix soils.
+Because the soil grid is coarse and a mapping unit can mix several soils, the flag can be wrong for an individual farm block.

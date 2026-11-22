@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Constraint rules in the soil and climate screen · Marcelinus Alfasisurya Setya Adhiwibawa, M.Stat.</title>
-  <meta name="description" content="The screening rules written for the Agronomic Intelligence tool, kept separate from the peer-reviewed archive.">
+  <meta name="description" content="The rules Agronomic Intelligence uses to flag a location as fertile or infertile.">
   <meta name="author" content="Marcelinus Alfasisurya Setya Adhiwibawa, M.Stat.">
   <link rel="icon" href="../../favicon.svg">
   <link rel="stylesheet" href="../../css/site.css">
@@ -28,11 +28,11 @@
         <ul class="facts"><li><span>Date</span><span>November 2026</span></li></ul>
         
       </div></header>
-      <div class="wrap-narrow prose"><p>These rules are the ones written down in the November 2026 note. They label a clicked location. They are not an FAO land-suitability class.</p>
-<p>A location is marked fertile when none of the primary constraints fire. It is marked infertile when any of the following is true for a major component, meaning a share of at least 25 percent, or for the topsoil:</p>
-<ul><li>A problem soil in the World Reference Base code: Histosol, Leptosol, Solonchak, Solonetz, Regosol, Arenosol, or Podzol.</li><li>Very shallow rooting, organic carbon of at least 18 percent, or coarse fragments of at least 60 percent.</li><li>Very poor drainage, organic carbon below 1 percent where the soil is not peat, or CEC below 5 cmolc kg⁻¹.</li><li>pH below 4.0 or above 8.5, aluminium saturation of at least 60 percent, ESP of at least 25 percent, or EC of at least 8 dS m⁻¹.</li></ul>
-<p>Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation stay visible beside the flag. A dry month is under 60 mm in the WorldClim year. A very wet year is over 3,000 mm.</p>
-<p>The note is explicit that the flag can be wrong for a farm block, because the grid is coarse and a mapping unit can mix soils.</p></div>
+      <div class="wrap-narrow prose"><p>Agronomic Intelligence labels a clicked location with a simple rule set. The label is a screening aid, not an FAO land-suitability class.</p>
+<p>A location is fertile when none of the main constraints apply. It is infertile when any of the following is true for a major soil component (at least 25 percent of the mapping unit) or for the topsoil:</p>
+<ul><li>A problem soil in the World Reference Base: Histosol, Leptosol, Solonchak, Solonetz, Regosol, Arenosol, or Podzol.</li><li>Very shallow rooting, organic carbon of 18 percent or more, or coarse fragments of 60 percent or more.</li><li>Very poor drainage, organic carbon below 1 percent in a mineral soil, or CEC below 5 cmolc kg⁻¹.</li><li>pH below 4.0 or above 8.5, aluminium saturation of 60 percent or more, ESP of 25 percent or more, or EC of 8 dS m⁻¹ or more.</li></ul>
+<p>Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation are shown beside the flag. A dry month has less than 60 mm of rain in the WorldClim year, and a very wet year has more than 3,000 mm.</p>
+<p>Because the soil grid is coarse and a mapping unit can mix several soils, the flag can be wrong for an individual farm block.</p></div>
     </article></main>
   <footer class="site-footer">
     <div class="wrap">

@@ -17,7 +17,6 @@ citation: "Indonesian Journal of Natural Pigments, 3(1), 32–35"
 doi: "10.33479/ijnp.2021.03.1.32"
 url: "https://doi.org/10.33479/ijnp.2021.03.1.32"
 featured: false
-note: "Open access under Creative Commons Attribution 4.0. Full text is not hosted here."
 ---
 
-Water extract is described as consistent with polar flavonoid or steroid compounds. Ethanol extract is described as consistent with polar carotenoids and showed no fluorescence. Acetone extract is described as containing carotenoid and a trace of chlorophyll, with an emission signal at 670 nm.
+The water extract was consistent with polar flavonoid or steroid compounds. The ethanol extract was consistent with polar carotenoids and showed no fluorescence. The acetone extract contained carotenoids and a trace of chlorophyll, with an emission signal at 670 nm.
