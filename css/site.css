@@ -168,9 +168,9 @@ h1, h2, h3, h4 {
 .hero { padding: 3.5rem 0 2.5rem; }
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(132px, 196px) minmax(0, 1fr);
-  gap: 1.25rem 2.25rem;
-  align-items: end;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 1.25rem 2.5rem;
+  align-items: center;
 }
 .portrait {
   display: block;
@@ -183,8 +183,8 @@ h1, h2, h3, h4 {
   background: #2b2b2b;
 }
 .hero h1 {
-  font-size: clamp(2.1rem, 4.6vw, 3.7rem);
-  max-width: 16ch;
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  max-width: 22ch;
   margin: 0;
 }
 .hero .cred { font-weight: 500; white-space: nowrap; }
