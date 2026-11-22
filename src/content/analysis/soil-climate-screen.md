@@ -13,15 +13,14 @@ status: "exploratory"
 featured: true
 ---
 
-This page explains the method inside the [Agronomic Intelligence platform](../../projects/agronomic-intelligence/index.html): how a single click on the map becomes a soil and climate screen. It is a working method, not a peer-reviewed paper.
+This page explains the method inside the [Agronomic Intelligence platform](../../projects/agronomic-intelligence/index.html): how a single click on the map becomes a soil and climate screen. It is a working method, not a peer-reviewed paper. You can [try the tool here](https://alfasisurya.github.io/agronomic-intelligence/).
 
 ## Data
 
 - Soil class and layer properties: Harmonized World Soil Database version 2 (FAO/IIASA).
-- Historical rainfall: WorldClim v2.1 monthly precipitation.
+- Historical climate: monthly normals for 1991–2020 from the ERA5 reanalysis, through the Open-Meteo Historical Weather API.
 - Six-month outlook: ECMWF SEAS5 ensemble mean, through the Open-Meteo seasonal API.
-- Administrative boundaries: GADM v4.1.
-- Optional: a Sentinel-2 surface-reflectance image supplied by the user.
+- Boundaries: Natural Earth.
 
 ## Method
 
@@ -30,14 +29,14 @@ The workflow is a lookup followed by a set of rules.
 ```text
 cell = soil raster at the clicked coordinate
 components = HWSD v2 attributes for that mapping unit
-rain = WorldClim monthly precipitation at the cell
+normals = ERA5 daily data for 1991-2020, averaged by month
 outlook = Open-Meteo SEAS5 ensemble mean, next six months
 vpd = calculated from temperature and relative humidity
 label each month against the local normal
 flag infertile if a listed constraint applies to a major component or the topsoil
 ```
 
-Separate ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation stay visible, so a single fertile flag does not hide a moderate limitation. Months with less than 60 mm of rain and years with more than 3,000 mm trigger a climate note. When a Sentinel-2 image is loaded, nutrient estimates use the regressions of Kaliana (2018), with leaf classes from Ochs and Olivin and soil classes from Goh (2011).
+Separate ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation stay visible, so a single fertile flag does not hide a moderate limitation. Long dry seasons (six or more months under 60 mm) and annual rainfall above 3,000 mm trigger a climate note.
 
 ## Result
 
@@ -50,20 +49,18 @@ The figure shows the tool centred on a point in East Java. For that mapping unit
 
 ## Interpretation
 
-The screen answers a desk question: given a coordinate, what constraints do global soil and climate data suggest, and what extra detail would a satellite image add within a field? It does not certify land suitability or estimate yield.
+The screen answers a desk question: given a coordinate, what constraints do global soil and climate data suggest? It does not certify land suitability or estimate yield.
 
 ## Limits
 
-A mapping unit can contain several soils. The fertile flag is a screening rule, not an official FAO class. The seasonal notes depend on a live forecast service, and reflectance regressions are sensitive to cloud, scale, and sensor. The screen should not be the only basis for a sourcing or compliance decision.
+A mapping unit can contain several soils. The fertile flag is a screening rule, not an official FAO class. ERA5 is a coarse reanalysis and can miss local rainfall patterns, and the seasonal notes depend on a live forecast service. The screen should not be the only basis for a sourcing or compliance decision.
 
 ## References
 
-FAO/IIASA (2023). Harmonized World Soil Database version 2.0.
+FAO and IIASA (2023). Harmonized World Soil Database version 2.0. Rome and Laxenburg. https://doi.org/10.4060/cc3823en
 
-Fick, S.E. and Hijmans, R.J. (2017). WorldClim 2. International Journal of Climatology, 37, 4302–4315.
+Hersbach, H. et al. (2020). The ERA5 global reanalysis. Quarterly Journal of the Royal Meteorological Society, 146, 1999–2049.
 
 ECMWF SEAS5, accessed through the Open-Meteo Seasonal Forecast API.
 
-GADM (2024). Database of Global Administrative Areas, version 4.1.
-
-Kaliana, I. (2018). Development of a Decision Support System for Oil Palm Fertilizer Requirement Based on Precision Agriculture. MSc thesis, IPB University.
+Natural Earth. Free vector and raster map data, naturalearthdata.com.

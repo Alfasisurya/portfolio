@@ -16,6 +16,8 @@ A location is fertile when none of the main constraints apply. It is infertile w
 - Very poor drainage, organic carbon below 1 percent in a mineral soil, or CEC below 5 cmolc kg⁻¹.
 - pH below 4.0 or above 8.5, aluminium saturation of 60 percent or more, ESP of 25 percent or more, or EC of 8 dS m⁻¹ or more.
 
-Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation are shown beside the flag. A dry month has less than 60 mm of rain in the WorldClim year, and a very wet year has more than 3,000 mm.
+Ratings for pH, organic carbon, total nitrogen, CEC, base saturation, and aluminium saturation are shown beside the flag. A dry month has less than 60 mm of rain in the 1991–2020 ERA5 normal, and a very wet year has more than 3,000 mm.
 
 Because the soil grid is coarse and a mapping unit can mix several soils, the flag can be wrong for an individual farm block.
+
+You can [try the tool yourself](https://alfasisurya.github.io/agronomic-intelligence/) by clicking any location in Indonesia.

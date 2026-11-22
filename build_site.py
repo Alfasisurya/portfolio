@@ -488,6 +488,10 @@ def build():
         ]
         if item.get("stack"):
             facts.append(("Tools", esc(", ".join(item["stack"]))))
+        if item.get("demo"):
+            facts.append(("Live tool", f'<a href="{esc(item["demo"])}">{esc(item["demo"].split("://", 1)[-1].rstrip("/"))}</a>'))
+        if item.get("repo"):
+            facts.append(("Source code", f'<a href="{esc(item["repo"])}">{esc(item["repo"].split("://", 1)[-1])}</a>'))
         body = detail(item, 2, " · ".join(item.get("domains") or []), facts)
         write(OUT / "projects" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "projects.html", body))
 
