@@ -177,6 +177,7 @@ h1, h2, h3, h4 {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
+  height: auto;
   object-position: center 18%;
   border: 1px solid var(--line);
   background: #2b2b2b;
@@ -299,7 +300,7 @@ h1, h2, h3, h4 {
 }
 
 .timeline { list-style: none; margin: 1.5rem 0 0; padding: 0; }
-.timeline li {
+.timeline > li {
   display: grid;
   grid-template-columns: 9rem 1fr;
   gap: 1rem;
@@ -308,7 +309,9 @@ h1, h2, h3, h4 {
 }
 .timeline h3 { margin: 0; font-size: 1.25rem; }
 .timeline .org { margin: 0.15rem 0 0.4rem; color: var(--muted); }
-.timeline ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+.timeline ul { margin: 0.4rem 0 0; padding-left: 1.1rem; list-style: disc; }
+.timeline ul li { display: list-item; padding: 0.15rem 0; border: 0; }
+
 
 .prose { font-size: 1.05rem; }
 .prose h2 { font-size: 1.55rem; margin: 2rem 0 0.5rem; }
@@ -342,6 +345,10 @@ h1, h2, h3, h4 {
 .callout strong { font-family: Consolas, ui-monospace, monospace; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 0.25rem; }
 
 .page-head { padding: 3rem 0 1rem; }
+.about-head { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 1.75rem; align-items: center; }
+.about-head h1 { max-width: none; }
+.about-head .position { margin-top: 0.6rem; font-size: 1.05rem; }
+.about-head + .lede { margin-top: 1.75rem; }
 .page-head h1 { font-size: clamp(2rem, 4vw, 3.1rem); margin: 0; max-width: 20ch; }
 
 .facts { list-style: none; padding: 0; margin: 1rem 0 0; }
@@ -358,6 +365,7 @@ h1, h2, h3, h4 {
 
 @media (max-width: 760px) {
   .hero-layout { grid-template-columns: 112px minmax(0, 1fr); align-items: start; }
+  .about-head { grid-template-columns: 96px minmax(0, 1fr); gap: 1rem; }
   .header-inner { align-items: flex-start; flex-wrap: wrap; }
   .nav-toggle { display: inline-flex; }
   .nav {
@@ -367,7 +375,7 @@ h1, h2, h3, h4 {
     padding-bottom: 0.6rem;
   }
   .nav.is-open { display: flex; }
-  .expertise div, .entry-list .block-link, .timeline li, .facts li {
+  .expertise div, .entry-list .block-link, .timeline > li, .facts li {
     grid-template-columns: 1fr;
     gap: 0.2rem;
   }

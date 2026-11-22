@@ -160,7 +160,7 @@ def layout(title, description, depth, active, body):
   <meta name="description" content="{esc(description)}">
   <meta name="author" content="{esc(FULL)}">
   <link rel="icon" href="{href(depth, "favicon.svg")}">
-  <link rel="stylesheet" href="{href(depth, "css/site.css")}">
+  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=3">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
@@ -343,12 +343,15 @@ def build():
     write(OUT / "index.html", layout(FULL, f"{FULL}, applied scientist working on AI, geospatial analysis, and intelligent systems for agriculture.", 0, "index.html", home))
 
     about = f'''<header class="page-head"><div class="wrap">
-      <p class="kicker">About</p>
-      <div class="hero-layout">
+      <div class="about-head">
         <img class="portrait" src="{photo}" width="640" height="640" alt="Portrait of {esc(NAME)}">
-        <h1>{esc(FULL)}</h1>
+        <div>
+          <p class="kicker">About</p>
+          <h1>{esc(FULL)}</h1>
+          <p class="position">Applied Scientist · AI, Geospatial &amp; Intelligent Systems</p>
+        </div>
       </div>
-      <p class="lede">{esc(FULL)} is an applied scientist in Malang, Indonesia. He holds an M.Stat. from Brawijaya University and a bachelor’s degree in plant pest and disease from the same university. Since 2021 he has worked as an Agricultural Data System Scientist at Mondelēz International. From 2012 to 2021 he was a research scientist at the Ma Chung Research Center for Photosynthetic Pigments.</p>
+      <p class="lede">{esc(NAME)} is an applied scientist in Malang, Indonesia. He holds an M.Stat. from Brawijaya University and a bachelor’s degree in plant pest and disease from the same university. Since 2021 he has worked as an Agricultural Data System Scientist at Mondelēz International. From 2012 to 2021 he was a research scientist at the Ma Chung Research Center for Photosynthetic Pigments.</p>
     </div></header>
     <section class="section"><div class="wrap">
       <h2>Profile</h2>
