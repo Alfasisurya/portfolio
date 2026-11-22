@@ -364,21 +364,57 @@ h1, h2, h3, h4 {
 .site-footer .name { color: var(--ink); font-family: Georgia, "Iowan Old Style", Palatino, serif; font-size: 1.15rem; margin: 0 0 0.3rem; }
 
 @media (max-width: 760px) {
-  .hero-layout { grid-template-columns: 112px minmax(0, 1fr); align-items: start; }
-  .about-head { grid-template-columns: 96px minmax(0, 1fr); gap: 1rem; }
-  .header-inner { align-items: flex-start; flex-wrap: wrap; }
-  .nav-toggle { display: inline-flex; }
+  body { font-size: 1rem; overflow-wrap: break-word; }
+  .wrap, .wrap-narrow { width: calc(100% - 2.5rem); }
+
+  .header-inner { align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem; padding: 0.7rem 0; }
+  .brand { flex: 1 1 0; min-width: 0; }
+  .brand-name { font-size: 0.95rem; }
+  .brand-role { font-size: 0.62rem; }
+  .nav-toggle { display: inline-flex; flex: none; padding: 0.4rem 0.9rem; }
   .nav {
     display: none;
     width: 100%;
     flex-direction: column;
-    padding-bottom: 0.6rem;
+    gap: 0;
+    padding: 0.25rem 0 0.5rem;
   }
   .nav.is-open { display: flex; }
+  .nav a { padding: 0.65rem 0; font-size: 1rem; border-top: 1px solid var(--line); }
+  .nav a[aria-current="page"] { box-shadow: none; font-weight: 600; }
+  .nav .theme-btn { align-self: flex-start; margin-top: 0.6rem; padding: 0.4rem 0.9rem; }
+
+  .hero { padding: 2rem 0 1.75rem; }
+  .hero-layout, .about-head { grid-template-columns: 1fr; gap: 1.1rem; align-items: start; }
+  .portrait { width: 132px; }
+  .hero h1, .page-head h1 { font-size: 1.85rem; max-width: none; }
+  .hero .cred { white-space: normal; }
+  .position { font-size: 1.05rem; margin-top: 0.6rem; }
+  .lede { font-size: 1.02rem; margin-top: 1rem; }
+  .link-row { gap: 0.4rem 1rem; }
+  .link-row a { display: inline-block; padding: 0.3rem 0; }
+
+  .page-head { padding: 2rem 0 0.5rem; }
+  .section { padding: 1.8rem 0; }
+  .section h2 { font-size: 1.5rem; }
+
   .expertise div, .entry-list .block-link, .timeline > li, .facts li {
     grid-template-columns: 1fr;
     gap: 0.2rem;
   }
+  .entry-list h3 { font-size: 1.12rem; }
+  .out-links a { display: inline-block; padding: 0.25rem 0; }
+
+  .record th, .record td { padding: 0.55rem 0.6rem 0.55rem 0; }
   .record td, .record tbody th { font-size: 1.2rem; }
+  .record tbody th { font-size: 0.95rem; }
+
+  .filters { flex-direction: column; }
+  .filters label, .filters input, .filters select { width: 100%; min-width: 0; box-sizing: border-box; }
+  .filters input, .filters select { font-size: 1rem; padding: 0.6rem 0.7rem; }
+
+  .prose pre { font-size: 0.8rem; }
+  .prose table { display: block; overflow-x: auto; }
+  .site-footer p { line-height: 1.9; }
 }
 

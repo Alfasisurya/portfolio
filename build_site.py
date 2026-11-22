@@ -160,7 +160,7 @@ def layout(title, description, depth, active, body):
   <meta name="description" content="{esc(description)}">
   <meta name="author" content="{esc(FULL)}">
   <link rel="icon" href="{href(depth, "favicon.svg")}">
-  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=4">
+  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=5">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
