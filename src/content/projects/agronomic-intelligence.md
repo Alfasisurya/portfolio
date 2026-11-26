@@ -27,8 +27,8 @@ The tool flags a location as fertile or infertile with a simple constraint scree
 Everything runs in the browser, with no server. The basemap is the Sentinel-2 cloudless 2016 mosaic by EOX, and the boundaries come from Natural Earth.
 
 <figure>
-  <img src="/images/analysis/agronomic-intelligence.jpg" alt="Agronomic Intelligence interface centred on East Java, with a soil-unit reading for Jawa Timur." />
-  <figcaption>The interface showing an HWSD v2 soil reading for a mapping unit in East Java.</figcaption>
+  <img src="/images/analysis/agronomic-intelligence.jpg" alt="Agronomic Intelligence on a satellite basemap of Indonesia with city labels, and the soil panel open for Batu, East Java." />
+  <figcaption>The interface on the satellite basemap, with the HWSD v2 soil reading for the default point at Jurang Kuali, Batu, East Java (SMU 4573).</figcaption>
 </figure>
 
 ## Limits

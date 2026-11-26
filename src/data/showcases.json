@@ -1,0 +1,15 @@
+[
+  {
+    "id": "agronomic-intelligence",
+    "title": "Agronomic Intelligence",
+    "description": "Web-based agronomic and geospatial screening for any location in Indonesia: soil profile, ERA5 rainfall normals, and a six-month climate outlook.",
+    "domain": "Life Science & Environmental Analytics",
+    "status": "Prototype",
+    "year": "2026",
+    "technologies": ["Geospatial Analytics", "Climate Data", "WebGIS"],
+    "image": "images/analysis/agronomic-intelligence.jpg",
+    "demoUrl": "https://alfasisurya.github.io/agronomic-intelligence/",
+    "repoUrl": "https://github.com/Alfasisurya/agronomic-intelligence",
+    "featured": true
+  }
+]

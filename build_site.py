@@ -1,29 +1,34 @@
 """Build the public site as plain HTML. No npm."""
 import html
+import json
 import re
 import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "src" / "content"
+DATA = ROOT / "src" / "data"
 OUT = ROOT
 
 SCHOLAR = "https://scholar.google.com/citations?hl=en&user=Ba2uOMsAAAAJ"
 LINKEDIN = "https://www.linkedin.com/in/marcelinus-adhiwibawa/"
 ORCID = "https://orcid.org/0000-0002-2191-7411"
 SCOPUS = "https://www.scopus.com/authid/detail.uri?authorId=56123256300"
+GITHUB = "https://github.com/Alfasisurya"
 EMAIL = "marcelinus.setya@gmail.com"
 NAME = "Marcelinus Alfasisurya Setya Adhiwibawa"
 FULL = f"{NAME}, M.Stat."
+ROLE = "Multidisciplinary Data Scientist"
+TAGLINE = "Statistical Science | Machine Learning | Computational Intelligence"
 
 NAV = [
-    ("index.html", "Home"),
     ("about.html", "About"),
+    ("expertise.html", "Expertise"),
     ("projects.html", "Research"),
-    ("analysis.html", "Analytical Work"),
     ("publications.html", "Publications"),
+    ("showcases.html", "Showcases"),
     ("patents.html", "Patents"),
-    ("blog.html", "Blog"),
+    ("explorations.html", "Explorations"),
     ("contact.html", "Contact"),
 ]
 
@@ -75,6 +80,13 @@ def load(kind):
         meta["body"] = body
         items.append(meta)
     return items
+
+
+def load_json(name):
+    path = DATA / name
+    if not path.exists():
+        return []
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def inline(text):
@@ -160,15 +172,14 @@ def layout(title, description, depth, active, body):
   <meta name="description" content="{esc(description)}">
   <meta name="author" content="{esc(FULL)}">
   <link rel="icon" href="{href(depth, "favicon.svg")}">
-  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=6">
+  <link rel="stylesheet" href="{href(depth, "css/site.css")}?v=8">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="{href(depth, "index.html")}">
-        <span class="brand-name">{esc(FULL)}</span>
-        <span class="brand-role">Applied Scientist</span>
+      <a class="brand" href="{href(depth, "index.html")}" aria-label="Home">
+        <span class="monogram" aria-hidden="true">MA</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false">Menu</button>
       <nav class="nav" aria-label="Primary">{"".join(links)}<button class="theme-btn" type="button">Theme</button></nav>
@@ -176,16 +187,17 @@ def layout(title, description, depth, active, body):
   </header>
   <main id="content">{body}</main>
   <footer class="site-footer">
-    <div class="wrap">
-      <p class="name">{esc(FULL)}</p>
-      <p>Applied Scientist · AI, Geospatial &amp; Intelligent Systems</p>
-      <p>
-        <a href="{SCHOLAR}">Google Scholar</a> ·
-        <a href="{ORCID}">ORCID 0000-0002-2191-7411</a> ·
-        <a href="{LINKEDIN}">LinkedIn</a> ·
-        <a href="{SCOPUS}">Scopus 56123256300</a> ·
-        <a href="mailto:{EMAIL}">{EMAIL}</a>
-      </p>
+    <div class="wrap footer-inner">
+      <nav class="footer-links" aria-label="Profiles">
+        <a href="{SCHOLAR}">Google Scholar</a>
+        <a href="{ORCID}">ORCID</a>
+        <a href="{LINKEDIN}">LinkedIn</a>
+        <a href="{GITHUB}">GitHub</a>
+        <a href="{SCOPUS}">Scopus</a>
+        <a href="{href(depth, "blog.html")}">Blog</a>
+        <a href="{href(depth, "analysis.html")}">Analytical work</a>
+      </nav>
+      <p class="footer-note">© 2026 · <a href="mailto:{EMAIL}">{EMAIL}</a></p>
     </div>
   </footer>
   <script src="{href(depth, "js/site.js")}"></script>
@@ -278,12 +290,135 @@ def detail(item, depth, kicker, facts):
     </article>'''
 
 
+def sort_showcases(items):
+    return sorted(
+        items,
+        key=lambda item: (0 if item.get("featured") else 1, -int(str(item.get("year") or 0) or 0), item.get("title", "")),
+    )
+
+
+def showcase_actions(item):
+    actions = []
+    if item.get("demoUrl"):
+        actions.append(
+            f'<a class="btn btn-primary" href="{esc(item["demoUrl"])}" target="_blank" rel="noopener">'
+            f'Open live demo <span class="sr-only">(opens in a new tab)</span></a>'
+        )
+    if item.get("repoUrl"):
+        actions.append(
+            f'<a class="btn btn-secondary" href="{esc(item["repoUrl"])}" target="_blank" rel="noopener">'
+            f'Source code <span class="sr-only">(opens in a new tab)</span></a>'
+        )
+    return "".join(actions)
+
+
+def showcase_feature(item, depth=0):
+    tags = "".join(f'<span class="tag">{esc(t)}</span>' for t in (item.get("technologies") or []))
+    image = ""
+    if item.get("image"):
+        image = (
+            f'<img class="feature-img" src="{esc(href(depth, item["image"]))}" '
+            f'alt="Screenshot of {esc(item["title"])}" width="960" height="600">'
+        )
+    meta = " · ".join(esc(bit) for bit in [item.get("status"), item.get("year")] if bit)
+    return (
+        f'<article class="feature">'
+        f'<div class="feature-media">{image}</div>'
+        f'<div class="feature-body">'
+        f'<p class="meta">{meta}</p>'
+        f'<h3>{esc(item["title"])}</h3>'
+        f'<p>{esc(item.get("description", ""))}</p>'
+        f'<div class="tag-row">{tags}</div>'
+        f'<div class="action-row">{showcase_actions(item)}</div>'
+        f'</div></article>'
+    )
+
+
+def showcase_cards(items, depth=0):
+    ordered = sort_showcases(items)
+    if not ordered:
+        return ""
+    first, rest = ordered[0], ordered[1:]
+    html_out = showcase_feature(first, depth)
+    if rest:
+        cards = []
+        for item in rest:
+            tags = "".join(f'<span class="tag">{esc(t)}</span>' for t in (item.get("technologies") or []))
+            image = ""
+            if item.get("image"):
+                image = (
+                    f'<img class="card-img" src="{esc(href(depth, item["image"]))}" '
+                    f'alt="Screenshot of {esc(item["title"])}" loading="lazy" width="640" height="360">'
+                )
+            meta = " · ".join(esc(bit) for bit in [item.get("status"), item.get("year")] if bit)
+            cards.append(
+                f'<article class="card">{image}<div class="card-body">'
+                f'<p class="meta">{meta}</p><h3>{esc(item["title"])}</h3>'
+                f'<p>{esc(item.get("description", ""))}</p>'
+                f'<div class="tag-row">{tags}</div>'
+                f'<div class="action-row">{showcase_actions(item)}</div>'
+                f'</div></article>'
+            )
+        html_out += '<div class="card-grid">' + "".join(cards) + "</div>"
+    return html_out
+
+
+def exploration_cards(items, detailed=False):
+    cards = []
+    for item in items:
+        tags = "".join(f'<span class="tag">{esc(m)}</span>' for m in (item.get("methods") or []))
+        question = f'<p>{esc(item.get("question", ""))}</p>' if detailed else ""
+        cards.append(
+            f'<article class="explore-card">'
+            f'<p class="status">{esc(item.get("status", "Idea"))}</p>'
+            f'<h3>{esc(item["title"])}</h3>'
+            f'{question}'
+            f'<div class="tag-row">{tags}</div>'
+            f'</article>'
+        )
+    return '<div class="explore-grid">' + "".join(cards) + "</div>"
+
+
+def compact_pubs(items):
+    rows = []
+    for item in items:
+        link = item.get("url") or (f"https://doi.org/{item['doi']}" if item.get("doi") else "")
+        doi = f' · <a href="{esc(link)}">DOI</a>' if link else ""
+        rows.append(
+            f'<li><span class="pub-year">{esc(item.get("year", ""))}</span>'
+            f'<span><a class="pub-title" href="publications/{item["slug"]}/index.html">{esc(item["title"])}</a>'
+            f'<span class="pub-venue">{esc(item.get("venue", ""))}{doi}</span></span></li>'
+        )
+    return '<ol class="pub-list">' + "".join(rows) + "</ol>"
+
+
+def compact_patents(items):
+    families = {}
+    for item in items:
+        families.setdefault(item["title"], []).append(item)
+    rows = []
+    for title, members in sorted(families.items(), key=lambda kv: -len(kv[1])):
+        members.sort(key=lambda i: (0 if str(i.get("status", "")).startswith("Granted") else 1, i.get("number", "")))
+        numbers = []
+        for item in members:
+            status = str(item.get("status", "")).split(" ")[0].rstrip(",")
+            kind = "granted" if status == "Granted" else "filed"
+            numbers.append(
+                f'<a class="patent-no {kind}" href="patents/{item["slug"]}/index.html">'
+                f'<span class="badge">{esc(status)}</span>{esc(item.get("number", ""))}</a>'
+            )
+        rows.append(f'<li class="patent-row"><p class="patent-title">{esc(title)}</p><div class="patent-nos">{"".join(numbers)}</div></li>')
+    return '<ul class="patent-list">' + "".join(rows) + "</ul>"
+
+
 def build():
     publications = sorted(load("publications"), key=lambda item: (-item.get("year", 0), item["title"]))
     projects = load("projects")
     analyses = load("analysis")
     patents = load("patents")
     posts = load("blog")
+    showcases = load_json("showcases.json")
+    explorations = load_json("explorations.json")
     for item in posts:
         item["year"] = str(item.get("date", ""))[:4]
     posts.sort(key=lambda item: str(item.get("date", "")), reverse=True)
@@ -297,96 +432,136 @@ def build():
     featured_projects = [item for item in projects if item.get("featured")]
     featured_papers = [item for item in publications if item.get("featured")]
     featured_analysis = [item for item in analyses if item.get("featured")]
-    featured_patent = next((item for item in patents if item.get("featured")), patents[0])
+    featured_showcases = [item for item in showcases if item.get("featured")] or showcases[:1]
 
     home = f'''
     <section class="hero"><div class="wrap hero-layout">
-      <img class="portrait" src="{photo}" width="640" height="640" alt="Portrait of {esc(NAME)}">
-      <div>
-        <p class="kicker">Applied Scientist</p>
+      <div class="hero-text">
+        <p class="kicker">{esc(ROLE)}</p>
         <h1>{esc(NAME)}<span class="cred">, M.Stat.</span></h1>
-        <p class="position">AI, Geospatial &amp; Intelligent Systems</p>
-        <p class="lede">I work where field science, data, and instruments meet. My research spans agricultural data science, geospatial analysis, spectroscopy, and applied machine learning, from leaf-image models and low-cost sensors to satellite analysis and a granted US patent.</p>
-        <ul class="link-row">
-          <li><a href="{SCHOLAR}">Google Scholar</a></li>
-          <li><a href="{ORCID}">ORCID</a></li>
-          <li><a href="{LINKEDIN}">LinkedIn</a></li>
-          <li><a href="{SCOPUS}">Scopus</a></li>
-          <li><a href="mailto:{EMAIL}">Email</a></li>
-        </ul>
-      </div>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Publication record</p>
-      <h2>Citations and impact</h2>
-      <p class="intro">My work has been cited 239 times on Google Scholar, with an h-index of 7 and an i10-index of 7. Since 2021 it has received 182 citations.</p>
-      <table class="record">
-        <thead><tr><th>Metric</th><th>All</th><th>Since 2021</th></tr></thead>
-        <tbody>
-          <tr><th>Citations</th><td>239</td><td>182</td></tr>
-          <tr><th>h-index</th><td>7</td><td>6</td></tr>
-          <tr><th>i10-index</th><td>7</td><td>3</td></tr>
-        </tbody>
-        <caption>Source: <a href="{SCHOLAR}">Google Scholar</a>, as of 22 November 2026.</caption>
-      </table>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Expertise</p>
-      <h2>Areas of work</h2>
-      <div class="expertise">
-        <div><h3>Agricultural data science</h3><p>Designing field data collection, cleaning, and reporting for agricultural research and plantations.</p></div>
-        <div><h3>Geospatial analytics and remote sensing</h3><p>Spatial analysis, satellite imagery, and map-based screening tools such as Agronomic Intelligence.</p></div>
-        <div><h3>Artificial intelligence</h3><p>CNN, ANN, and ANFIS models for plant images and spectral data.</p></div>
-        <div><h3>Chemometrics and spectroscopy</h3><p>Pigment analysis, chemometric modelling, and NIR spectrometry for cocoa-leaf nutrients.</p></div>
-        <div><h3>IoT and embedded systems</h3><p>Low-cost multispectral sensors, photometers, and chlorophyll meters built with Arduino, ESP32, and Raspberry Pi.</p></div>
-        <div><h3>Statistical modelling</h3><p>Multivariate statistics, spatial interpolation, and classification.</p></div>
-      </div>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Selected work</p><h2>Research and projects</h2>
-      {entry_list(featured_projects, 0, "projects")}
-      <p><a href="projects.html">All research and projects</a></p>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Analytical work</p><h2>Exploratory analyses</h2>
-      <p class="intro">Working analyses that have not been peer reviewed.</p>
-      {entry_list(featured_analysis, 0, "analysis")}
-      <p><a href="analysis.html">All analytical work</a></p>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Blog</p><h2>Latest writing</h2>
-      {entry_list(posts[:3], 0, "blog")}
-      <p><a href="blog.html">All blog posts</a></p>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Papers</p><h2>Selected publications</h2>
-      {entry_list(featured_papers, 0, "publications")}
-      <p><a href="publications.html">All publications</a></p>
-    </div></section>
-    <section class="section"><div class="wrap">
-      <p class="kicker">Patent</p>
-      <h2>{esc(featured_patent.get("number", ""))}</h2>
-      <p class="intro">{esc(featured_patent["title"])}</p>
-      <p>United States patent, granted 14 October 2025. Assigned to {esc(featured_patent.get("owner", ""))}.</p>
-      <p><a href="patents/{featured_patent["slug"]}/index.html">Patent details</a> · <a href="{esc(featured_patent.get("url", SCHOLAR))}">Google Patents</a></p>
-    </div></section>'''
-    write(OUT / "index.html", layout(FULL, f"{FULL}, applied scientist working on AI, geospatial analysis, and intelligent systems for agriculture.", 0, "index.html", home))
-
-    about = f'''<header class="page-head"><div class="wrap">
-      <div class="about-head">
-        <img class="portrait" src="{photo}" width="640" height="640" alt="Portrait of {esc(NAME)}">
-        <div>
-          <p class="kicker">About</p>
-          <h1>{esc(FULL)}</h1>
-          <p class="position">Applied Scientist · AI, Geospatial &amp; Intelligent Systems</p>
+        <p class="tagline">Statistical science · Machine learning · Computational intelligence</p>
+        <p class="lede">I turn complex scientific data into knowledge people can act on. Trained in agricultural science and statistics, I work with field trials, spectra, plant images, satellite data, and sensors, and build the models and tools that help researchers and growers decide.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="projects.html">Explore my work</a>
+          <a class="btn btn-secondary" href="showcases.html">Try a live demo</a>
         </div>
       </div>
-      <p class="lede">{esc(NAME)} is an applied scientist in Malang, Indonesia. He holds an M.Stat. from Brawijaya University and a bachelor’s degree in plant pest and disease from the same university. Since 2021 he has worked as an Agricultural Data System Scientist at Mondelēz International. From 2012 to 2021 he was a research scientist at the Ma Chung Research Center for Photosynthetic Pigments.</p>
-    </div></header>
+      <figure class="hero-photo">
+        <img class="portrait" src="{photo}" width="640" height="640" alt="Portrait photograph">
+      </figure>
+    </div>
+    <div class="wrap">
+      <dl class="stats">
+        <div><dt>Years in applied research</dt><dd>15+</dd></div>
+        <div><dt>Publications</dt><dd>{len(publications)}</dd></div>
+        <div><dt>Citations</dt><dd>239</dd></div>
+        <div><dt>h-index</dt><dd>7</dd></div>
+        <div><dt>Granted patents</dt><dd>{sum(1 for p in patents if str(p.get("status", "")).startswith("Granted"))}</dd></div>
+      </dl>
+      <p class="stats-source">Citation figures from <a href="{SCHOLAR}">Google Scholar</a>, 22 November 2026.</p>
+    </div></section>
+
     <section class="section"><div class="wrap">
-      <h2>Profile</h2>
-      <p>His work connects agricultural experiments with the data systems behind them: study design, data cleaning, spatial analysis, spectra, images, and the instruments that collect them. He applies machine learning to concrete agricultural problems, using CNN, ANN, and ANFIS models on leaf images, satellite pixels, and spectra.</p>
-      <p>He has published more than 25 peer-reviewed papers and conference proceedings, cited 239 times on Google Scholar (h-index 7). He is a co-inventor of <a href="patents/us-12444511/index.html">US Patent 12,444,511</a> on predicting cocoa-leaf nutrients from spectrometry data.</p>
+      <div class="section-head">
+        <p class="kicker">What I do</p>
+        <h2>Two fields of depth, one set of methods</h2>
+      </div>
+      <div class="pillars">
+        <article class="pillar">
+          <p class="pillar-num">01</p>
+          <h3>Life science &amp; environmental analytics</h3>
+          <p>Agricultural data systems, plant imaging, remote sensing, drone mapping, and climate screening that support field decisions.</p>
+        </article>
+        <article class="pillar">
+          <p class="pillar-num">02</p>
+          <h3>Chemistry &amp; spectral intelligence</h3>
+          <p>Chemometrics, NIR spectroscopy, pigment analysis, and low-cost optical sensors that turn spectra into measurements.</p>
+        </article>
+        <article class="pillar pillar-methods">
+          <p class="pillar-num">03</p>
+          <h3>Methods that travel</h3>
+          <p>Statistical modelling and inference, multivariate analysis (PCA, PLSR), experimental design, machine learning, time series, Python and R, geospatial pipelines, and sensor prototyping.</p>
+        </article>
+      </div>
+      <p class="more"><a href="expertise.html">How the expertise is mapped →</a></p>
+    </div></section>
+
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Research &amp; projects</p>
+        <h2>Selected work</h2>
+      </div>
+      {entry_list(featured_projects, 0, "projects")}
+      <p class="more"><a href="projects.html">All research and projects →</a></p>
+    </div></section>
+
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Publications</p>
+        <h2>Peer-reviewed research</h2>
+      </div>
+      {compact_pubs(featured_papers[:5])}
+      <p class="more"><a href="publications.html">All {len(publications)} publications →</a></p>
+    </div></section>
+
+    <section class="section section-tint" id="live-showcases"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Live demonstrations</p>
+        <h2>From research to a working tool</h2>
+      </div>
+      {showcase_cards(featured_showcases, 0)}
+    </div></section>
+
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Patents</p>
+        <h2>Intellectual contributions</h2>
+      </div>
+      {compact_patents(patents)}
+      <p class="more"><a href="patents.html">Patent details →</a></p>
+    </div></section>
+
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Explorations</p>
+        <h2>Where I am heading next</h2>
+        <p class="intro">Areas I am studying, not yet established professional work.</p>
+      </div>
+      {exploration_cards(explorations)}
+      <p class="more"><a href="explorations.html">Read the research questions →</a></p>
+    </div></section>
+
+    <section class="section contact-band"><div class="wrap contact-inner">
+      <div>
+        <p class="kicker">Contact</p>
+        <h2>Let’s talk about data</h2>
+        <p class="intro">Open to research collaboration and data science roles.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="mailto:{EMAIL}">Email me</a>
+        <a class="btn btn-secondary" href="{LINKEDIN}">LinkedIn</a>
+      </div>
+    </div></section>'''
+    write(
+        OUT / "index.html",
+        layout(
+            FULL,
+            f"{FULL}, multidisciplinary data scientist working across statistical science, machine learning, and computational systems.",
+            0,
+            "index.html",
+            home,
+        ),
+    )
+
+    about = f'''<header class="page-head"><div class="wrap">
+      <p class="kicker">About</p>
+      <h1>From the field to the model</h1>
+      <p class="lede">I started in plant protection on oil-palm plantations, moved into research on pigments, imaging, and low-cost sensors, and now build agricultural data systems for cocoa research at Mondelēz International.</p>
+    </div></header>
+    <section class="section"><div class="wrap prose-cols">
+      <p>My foundation is agricultural science and statistics, both from Brawijaya University. That combination shapes how I work: I start from how the data were measured in the field or the lab, then choose the statistical or machine-learning method that answers the question honestly.</p>
+      <p>Over the years I have combined statistical modelling, chemometrics, image analysis, remote sensing, and sensor prototyping to turn measurements into usable knowledge. The work has produced {len(publications)} papers, two granted patents, mobile tools such as the soybean leaf app Mata Daun, and the open Agronomic Intelligence platform.</p>
+      <p>Next, I want to carry the same methods into other data-rich fields, such as finance, supply chains, measurement science, and food analytics. Those directions are listed separately under <a href="explorations.html">Explorations</a>.</p>
     </div></section>
     <section class="section"><div class="wrap">
       <h2>Career</h2>
@@ -415,7 +590,7 @@ def build():
     write(OUT / "about.html", layout("About", f"Career and education of {FULL}", 0, "about.html", about))
 
     contact = f'''<header class="page-head"><div class="wrap">
-      <p class="kicker">Contact</p><h1>{esc(FULL)}</h1>
+      <p class="kicker">Contact</p><h1>Get in touch</h1>
       <p class="lede">For research collaboration or professional enquiries, email is the best way to reach me.</p>
     </div></header>
     <section class="section"><div class="wrap"><ul class="facts">
@@ -424,11 +599,12 @@ def build():
       <li><span>Google Scholar</span><a href="{SCHOLAR}">scholar.google.com/citations?user=Ba2uOMsAAAAJ</a></li>
       <li><span>ORCID</span><a href="{ORCID}">0000-0002-2191-7411</a></li>
       <li><span>LinkedIn</span><a href="{LINKEDIN}">linkedin.com/in/marcelinus-adhiwibawa</a></li>
+      <li><span>GitHub</span><a href="{GITHUB}">github.com/Alfasisurya</a></li>
       <li><span>Scopus</span><a href="{SCOPUS}">56123256300</a></li>
     </ul></div></section>'''
     write(OUT / "contact.html", layout("Contact", f"Contact {FULL}", 0, "contact.html", contact))
 
-    def archive_page(filename, heading, kicker, lede, items, section):
+    def archive_page(filename, heading, kicker, lede, items, section, extra_after=""):
         years = sorted({str(item.get("year") or item.get("period")) for item in items}, reverse=True)
         topics = sorted({topic for item in items for topic in (item.get("domains") or item.get("topics") or [])})
         filters = (
@@ -445,8 +621,19 @@ def build():
         body = (
             f'<header class="page-head"><div class="wrap"><p class="kicker">{kicker}</p><h1>{heading}</h1><p class="lede">{lede}</p></div></header>'
             f'<section class="section"><div class="wrap">{filters}{entry_list(items, 0, section)}<p data-filter-empty hidden>No matching items.</p></div></section>'
+            + extra_after
         )
         write(OUT / filename, layout(heading, lede, 0, filename, body))
+
+    showcases_after_pubs = f'''
+    <section class="section section-tint" id="live-showcases"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Live demonstrations</p>
+        <h2>From research to a working tool</h2>
+      </div>
+      {showcase_cards(showcases, 0)}
+      <p class="more"><a href="patents.html">Continue to patents →</a></p>
+    </div></section>'''
 
     archive_page(
         "publications.html",
@@ -455,14 +642,118 @@ def build():
         f"{len(publications)} journal articles and conference papers, from 2013 to 2025. Each entry links to the DOI where available and to Google Scholar.",
         publications,
         "publications",
+        extra_after=showcases_after_pubs,
     )
-    archive_page("projects.html", "Projects", "Research", "Research lines and tools, from leaf-image models and field instruments to geospatial screening.", projects, "projects")
+    archive_page("projects.html", "Research & Projects", "Research", "Research lines and tools, from leaf-image models and field instruments to geospatial screening.", projects, "projects")
     archive_page("analysis.html", "Analytical work", "Library", "Exploratory analyses and working studies. These have not been peer reviewed.", analyses, "analysis")
     archive_page("blog.html", "Blog", "Writing", "Articles about projects I am working on or have finished, and other public work.", posts, "blog")
 
+    expertise = f'''<header class="page-head"><div class="wrap">
+      <p class="kicker">Expertise</p>
+      <h1>Depth, methods, and direction</h1>
+      <p class="lede">Two domains where my work is established, the methods that connect them, and the fields I am exploring next.</p>
+    </div></header>
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Established</p>
+        <h2>Backed by roles, publications, and patents</h2>
+      </div>
+      <div class="pillars pillars-2">
+        <article class="pillar">
+          <p class="pillar-num">01</p>
+          <h3>Life science &amp; environmental analytics</h3>
+          <ul>
+            <li>Agricultural data science and digital agronomy</li>
+            <li>Plant imaging and field monitoring</li>
+            <li>Remote sensing, geospatial analytics, and drone photogrammetry</li>
+            <li>Climate and environmental analytics for agricultural decisions</li>
+          </ul>
+          <p class="evidence">Mondelēz agricultural data systems · Ma Chung research · Agronomic Intelligence · remote-sensing papers</p>
+        </article>
+        <article class="pillar">
+          <p class="pillar-num">02</p>
+          <h3>Chemistry &amp; spectral intelligence</h3>
+          <ul>
+            <li>Chemometrics and multivariate calibration</li>
+            <li>NIR spectroscopy and spectral data analysis</li>
+            <li>Optical and multispectral sensor prototyping</li>
+            <li>Predictive models for chemical and biological measurements</li>
+          </ul>
+          <p class="evidence">US Patent 12,444,511 · pigment and chemometrics papers · low-cost field instruments</p>
+        </article>
+      </div>
+    </div></section>
+    <section class="section"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Transferable</p>
+        <h2>Methods that travel between domains</h2>
+      </div>
+      <div class="chip-row">
+        <span class="chip">Statistical modelling and inference</span>
+        <span class="chip">Regression and multivariate analysis</span>
+        <span class="chip">PCA and PLSR</span>
+        <span class="chip">Experimental design and validation</span>
+        <span class="chip">Machine learning and predictive analytics</span>
+        <span class="chip">Time series</span>
+        <span class="chip">Python and R</span>
+        <span class="chip">Data processing and visualisation</span>
+        <span class="chip">Geospatial data pipelines</span>
+        <span class="chip">Sensor and data-system prototyping</span>
+      </div>
+    </div></section>
+    <section class="section section-tint"><div class="wrap">
+      <div class="section-head">
+        <p class="kicker">Emerging</p>
+        <h2>Fields I am exploring</h2>
+        <p class="intro">Study directions, not yet established professional work.</p>
+      </div>
+      {exploration_cards(explorations)}
+      <p class="more"><a href="explorations.html">Read the research questions →</a></p>
+    </div></section>'''
+    write(OUT / "expertise.html", layout("Expertise", "Established expertise, transferable methods, and emerging research interests.", 0, "expertise.html", expertise))
+
+    showcases_page = f'''<header class="page-head"><div class="wrap">
+      <p class="kicker">Showcases</p>
+      <h1>Live demonstrations</h1>
+      <p class="lede">Research turned into tools you can open and use in the browser.</p>
+    </div></header>
+    <section class="section"><div class="wrap">
+      {showcase_cards(showcases, 0)}
+      <p class="more"><a href="projects.html">The research behind it →</a></p>
+    </div></section>'''
+    write(
+        OUT / "showcases.html",
+        layout(
+            "Live Showcases",
+            "Live demonstrations and project showcases, starting with Agronomic Intelligence.",
+            0,
+            "showcases.html",
+            showcases_page,
+        ),
+    )
+
+    explorations_page = f'''<header class="page-head"><div class="wrap">
+      <p class="kicker">Explorations</p>
+      <h1>Where I am heading next</h1>
+      <p class="lede">Questions I am studying in fields beyond my established work. Each is marked as an idea or as something I am actively learning; none is presented as completed professional experience.</p>
+    </div></header>
+    <section class="section"><div class="wrap">
+      {exploration_cards(explorations, detailed=True)}
+    </div></section>'''
+    write(
+        OUT / "explorations.html",
+        layout(
+            "Explorations",
+            "Emerging research interests in finance, supply chain, psychometrics, and food analytics.",
+            0,
+            "explorations.html",
+            explorations_page,
+        ),
+    )
+
     patent_rows = entry_list(patents, 0, "patents")
-    patents_body = f'''<header class="page-head"><div class="wrap"><p class="kicker">Innovation</p><h1>Patents</h1>
-      <p class="lede">Granted patents and published applications, covering cocoa-leaf nutrient prediction from spectrometry and image-based screening of drought-tolerant soybean.</p>
+    patents_body = f'''<header class="page-head"><div class="wrap"><p class="kicker">Patents</p><h1>Intellectual contributions</h1>
+      <p class="lede">Granted patents and published applications on cocoa-leaf nutrient prediction from spectrometry and image-based screening of drought-tolerant soybean. Legal status follows the public records linked from each entry.</p>
     </div></header><section class="section"><div class="wrap">{patent_rows}</div></section>'''
     write(OUT / "patents.html", layout("Patents", "Patents and patent applications.", 0, "patents.html", patents_body))
 
@@ -526,7 +817,10 @@ def build():
         body = body.replace("</article>", '<div class="wrap-narrow"><p class="back-link"><a href="../../blog.html">← All blog posts</a></p></div></article>')
         write(OUT / "blog" / item["slug"] / "index.html", layout(item["title"], item.get("summary", ""), 2, "blog.html", body))
 
-    print(f"pages written: {len(publications)} papers, {len(projects)} projects, {len(patents)} patents")
+    print(
+        f"pages written: {len(publications)} papers, {len(projects)} projects, "
+        f"{len(patents)} patents, {len(showcases)} showcases, {len(explorations)} explorations"
+    )
 
 
 if __name__ == "__main__":

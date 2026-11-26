@@ -1,0 +1,38 @@
+[
+  {
+    "id": "financial-modeling",
+    "title": "Financial Modeling & Forecasting",
+    "domain": "Financial & Economic Analytics",
+    "status": "Learning",
+    "question": "How can statistical and time-series methods used in scientific monitoring support financial statement analysis, cash-flow forecasting, and risk modelling?",
+    "methods": ["Regression", "Time-series thinking", "Scenario analysis"],
+    "note": "Interest and study direction. Not presented as completed professional finance experience."
+  },
+  {
+    "id": "supply-chain",
+    "title": "Supply Chain Forecasting",
+    "domain": "Industrial & Supply Chain Intelligence",
+    "status": "Idea",
+    "question": "How can demand forecasting, inventory modelling, and optimization methods transfer from agricultural operations data to industrial supply chains?",
+    "methods": ["Forecasting", "Optimization concepts", "Operational analytics"],
+    "note": "Emerging interest. No completed industrial supply-chain project is claimed here."
+  },
+  {
+    "id": "psychometrics",
+    "title": "Psychometrics & Human Analytics",
+    "domain": "Social Science & Human Analytics",
+    "status": "Learning",
+    "question": "How do measurement models such as IRT, CFA, and SEM relate to the multivariate and validation habits already used in scientific data work?",
+    "methods": ["Multivariate statistics", "Measurement models", "Survey analytics"],
+    "note": "General statistical foundations support this direction; domain-specific psychometric practice is not claimed as established expertise."
+  },
+  {
+    "id": "food-consumer",
+    "title": "Food Data Science & Consumer Analytics",
+    "domain": "Food Science & Consumer Analytics",
+    "status": "Idea",
+    "question": "How can chemometrics, spectroscopy, and sensory-related analytical habits extend toward food quality prediction, authentication, and consumer preference modelling?",
+    "methods": ["Chemometrics", "Spectroscopy", "Multivariate calibration"],
+    "note": "Related to existing chemistry and spectral research. No unverified food-industry projects are listed."
+  }
+]

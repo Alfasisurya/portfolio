@@ -7,18 +7,17 @@
   <meta name="description" content="Click anywhere in Indonesia to see the soil, the rainfall year, and a six-month climate outlook for that spot.">
   <meta name="author" content="Marcelinus Alfasisurya Setya Adhiwibawa, M.Stat.">
   <link rel="icon" href="../../favicon.svg">
-  <link rel="stylesheet" href="../../css/site.css?v=6">
+  <link rel="stylesheet" href="../../css/site.css?v=8">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="brand" href="../../index.html">
-        <span class="brand-name">Marcelinus Alfasisurya Setya Adhiwibawa, M.Stat.</span>
-        <span class="brand-role">Applied Scientist</span>
+      <a class="brand" href="../../index.html" aria-label="Home">
+        <span class="monogram" aria-hidden="true">MA</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false">Menu</button>
-      <nav class="nav" aria-label="Primary"><a href="../../index.html">Home</a><a href="../../about.html">About</a><a href="../../projects.html" aria-current="page">Research</a><a href="../../analysis.html">Analytical Work</a><a href="../../publications.html">Publications</a><a href="../../patents.html">Patents</a><a href="../../blog.html">Blog</a><a href="../../contact.html">Contact</a><button class="theme-btn" type="button">Theme</button></nav>
+      <nav class="nav" aria-label="Primary"><a href="../../about.html">About</a><a href="../../expertise.html">Expertise</a><a href="../../projects.html" aria-current="page">Research</a><a href="../../publications.html">Publications</a><a href="../../showcases.html">Showcases</a><a href="../../patents.html">Patents</a><a href="../../explorations.html">Explorations</a><a href="../../contact.html">Contact</a><button class="theme-btn" type="button">Theme</button></nav>
     </div>
   </header>
   <main id="content"><article>
@@ -33,22 +32,23 @@
 <p>The tool flags a location as fertile or infertile with a simple constraint screen. A location is marked infertile when a major soil component (at least 25 percent of the mapping unit) or the topsoil has a serious limitation: a problem soil type in the World Reference Base, very shallow rooting, very high organic carbon, coarse fragments of 60 percent or more, very poor drainage, organic carbon below 1 percent in a mineral soil, CEC below 5 cmolc kg⁻¹, pH below 4.0 or above 8.5, aluminium saturation of 60 percent or more, ESP of 25 percent or more, or EC of 8 dS m⁻¹ or more. This is a screening rule, not an FAO land-evaluation class or a yield model.</p>
 <p>Everything runs in the browser, with no server. The basemap is the Sentinel-2 cloudless 2016 mosaic by EOX, and the boundaries come from Natural Earth.</p>
 <figure>
-<p>  &lt;img src=&quot;/images/analysis/agronomic-intelligence.jpg&quot; alt=&quot;Agronomic Intelligence interface centred on East Java, with a soil-unit reading for Jawa Timur.&quot; /&gt;   &lt;figcaption&gt;The interface showing an HWSD v2 soil reading for a mapping unit in East Java.&lt;/figcaption&gt;</p>
+<p>  &lt;img src=&quot;/images/analysis/agronomic-intelligence.jpg&quot; alt=&quot;Agronomic Intelligence on a satellite basemap of Indonesia with city labels, and the soil panel open for Batu, East Java.&quot; /&gt;   &lt;figcaption&gt;The interface on the satellite basemap, with the HWSD v2 soil reading for the default point at Jurang Kuali, Batu, East Java (SMU 4573).&lt;/figcaption&gt;</p>
 </figure>
 <h2>Limits</h2>
 <p>The soil grid is coarse compared with a farm block, and one mapping unit can contain several soils. The rainfall normal and the seasonal outlook depend on a live forecast service. The screen is meant for an early desk assessment and should not be the only basis for sourcing or compliance decisions.</p></div>
     </article></main>
   <footer class="site-footer">
-    <div class="wrap">
-      <p class="name">Marcelinus Alfasisurya Setya Adhiwibawa, M.Stat.</p>
-      <p>Applied Scientist · AI, Geospatial &amp; Intelligent Systems</p>
-      <p>
-        <a href="https://scholar.google.com/citations?hl=en&user=Ba2uOMsAAAAJ">Google Scholar</a> ·
-        <a href="https://orcid.org/0000-0002-2191-7411">ORCID 0000-0002-2191-7411</a> ·
-        <a href="https://www.linkedin.com/in/marcelinus-adhiwibawa/">LinkedIn</a> ·
-        <a href="https://www.scopus.com/authid/detail.uri?authorId=56123256300">Scopus 56123256300</a> ·
-        <a href="mailto:marcelinus.setya@gmail.com">marcelinus.setya@gmail.com</a>
-      </p>
+    <div class="wrap footer-inner">
+      <nav class="footer-links" aria-label="Profiles">
+        <a href="https://scholar.google.com/citations?hl=en&user=Ba2uOMsAAAAJ">Google Scholar</a>
+        <a href="https://orcid.org/0000-0002-2191-7411">ORCID</a>
+        <a href="https://www.linkedin.com/in/marcelinus-adhiwibawa/">LinkedIn</a>
+        <a href="https://github.com/Alfasisurya">GitHub</a>
+        <a href="https://www.scopus.com/authid/detail.uri?authorId=56123256300">Scopus</a>
+        <a href="../../blog.html">Blog</a>
+        <a href="../../analysis.html">Analytical work</a>
+      </nav>
+      <p class="footer-note">© 2026 · <a href="mailto:marcelinus.setya@gmail.com">marcelinus.setya@gmail.com</a></p>
     </div>
   </footer>
   <script src="../../js/site.js"></script>

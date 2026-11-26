@@ -43,8 +43,8 @@ Separate ratings for pH, organic carbon, total nitrogen, CEC, base saturation, a
 The figure shows the tool centred on a point in East Java. For that mapping unit, the panel lists three soil components, Luvisols and Andosols, along with drainage, rooting depth, and available water.
 
 <figure>
-  <img src="/images/analysis/agronomic-intelligence.jpg" alt="Map of Indonesia with the Agronomic Intelligence soil panel open on Jawa Timur." />
-  <figcaption>Agronomic Intelligence, November 2026, showing a single clicked cell.</figcaption>
+  <img src="/images/analysis/agronomic-intelligence.jpg" alt="Map of Indonesia with the Agronomic Intelligence soil panel open for Batu, East Java." />
+  <figcaption>Agronomic Intelligence, November 2026, showing the soil reading for one point in Batu, East Java.</figcaption>
 </figure>
 
 ## Interpretation
