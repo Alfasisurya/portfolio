@@ -185,6 +185,15 @@ tr:last-child td { border-bottom: 0; }
 .method li { margin: 0.45rem 0; }
 .method li strong { color: var(--ink); }
 
+.sources {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+}
+.sources li { margin: 0.65rem 0; }
+.sources strong { color: var(--ink); }
+.sources em { font-style: italic; }
+
 footer {
   border-top: 1px solid var(--line);
   padding: 1.75rem 0 2.5rem;

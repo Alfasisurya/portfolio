@@ -198,11 +198,44 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Sources</p>
+          <h2>Data sources</h2>
+        </div>
+        <div class="panel">
+          <ul class="sources">
+            <li>
+              <strong>Leaf spectra and lab nutrients.</strong>
+              Public spectroradiometer worksheets for Nitrogen, Phosphorus, Potassium, and Magnesium
+              from
+              <a href="https://github.com/anakinpalinyot29/oil-palm-nutrient-estimation">oil-palm-nutrient-estimation</a>
+              (GitHub; advised by Dr. Apichon Witayangkurn).
+              Wavelength range 325–1075&nbsp;nm with paired leaf nutrient values.
+            </li>
+            <li>
+              <strong>Related open materials.</strong>
+              UAV vegetation-index leaf-nutrition set:
+              <a href="https://github.com/datoeltoel/palm-oil-leaf-nutrition-prediction">palm-oil-leaf-nutrition-prediction</a>
+              (used for reference; the XGBoost scores on this page are from the spectroradiometer worksheets above).
+            </li>
+            <li>
+              <strong>Status labels.</strong>
+              Binary Deficient / Adequate cuts use frond-17 style oil-palm leaf critical levels
+              (N 2.50%, P 0.15%, K 1.00%, Mg 0.25% dry matter).
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="wrap">
       Oil-palm leaf nutrient status from spectra · critical-threshold XGBoost.
+      Spectra from the public oil-palm-nutrient-estimation worksheets.
       Exploratory analytics page, not a peer-reviewed claim.
     </div>
   </footer>
