@@ -479,8 +479,8 @@ def build():
         </article>
         <article class="pillar pillar-methods">
           <p class="pillar-num">03</p>
-          <h3>Methods that travel</h3>
-          <p>Statistical modelling and inference, multivariate analysis (PCA, PLSR), experimental design, machine learning, time series, Python and R, geospatial pipelines, and sensor prototyping.</p>
+          <h3>Methods that work across fields</h3>
+          <p>Forecasting and time-series modelling, statistical modelling and inference, multivariate analysis (PCA, PLSR), experimental design, machine learning, Python and R, geospatial pipelines, and sensor prototyping.</p>
         </article>
       </div>
       <p class="more"><a href="expertise.html">How the expertise is mapped →</a></p>
@@ -686,15 +686,15 @@ def build():
     <section class="section"><div class="wrap">
       <div class="section-head">
         <p class="kicker">Transferable</p>
-        <h2>Methods that travel between domains</h2>
+        <h2>Methods that work across fields</h2>
       </div>
       <div class="chip-row">
+        <span class="chip">Forecasting and time-series modelling</span>
         <span class="chip">Statistical modelling and inference</span>
         <span class="chip">Regression and multivariate analysis</span>
         <span class="chip">PCA and PLSR</span>
         <span class="chip">Experimental design and validation</span>
         <span class="chip">Machine learning and predictive analytics</span>
-        <span class="chip">Time series</span>
         <span class="chip">Python and R</span>
         <span class="chip">Data processing and visualisation</span>
         <span class="chip">Geospatial data pipelines</span>
