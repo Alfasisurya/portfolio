@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oil Palm Leaf Nutrient Status</title>
+  <meta name="description" content="XGBoost classification of oil-palm leaf N, P, K, and Mg status from leaf spectra against frond-17 critical thresholds." />
+  <link rel="stylesheet" href="../showcase.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="back" href="../showcases.html">← Live showcases</a>
+      <p class="top-meta">Prototype · 2026</p>
+    </div>
+  </header>
+
+  <header class="page-head">
+    <div class="wrap">
+      <p class="kicker">Spectral chemometrics · oil palm</p>
+      <h1>Leaf nutrient status</h1>
+      <p class="lede">
+        Leaf spectra (325–1075&nbsp;nm) classify nitrogen, phosphorus, potassium, and magnesium
+        status against oil-palm frond-17 critical thresholds. The model is XGBoost,
+        scored with stratified cross-validation on the original samples only.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Results</p>
+          <h2>Cross-validated performance</h2>
+          <p class="intro">Binary task: Deficient vs Adequate relative to each critical level. No synthetic augmentation.</p>
+        </div>
+        <div class="stats">
+          <div><strong>73%</strong><span>Mean XGBoost accuracy<br/>across N, P, K, Mg</span></div>
+          <div><strong>66–81%</strong><span>Accuracy range<br/>by nutrient</span></div>
+          <div><strong>+22 pp</strong><span>Best lift over majority<br/>(Magnesium)</span></div>
+          <div><strong>~120–135</strong><span>Original leaf spectra<br/>per nutrient</span></div>
+        </div>
+        <figure class="panel">
+          <img src="assets/charts/score_comparison.png" alt="Bar chart comparing majority baseline, XGBoost accuracy, and balanced accuracy" />
+          <figcaption>Dashed line marks a 90% aspirational target. Mid-70% is the realistic band for this sample size.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Thresholds</p>
+          <h2>Oil-palm critical levels</h2>
+          <p class="intro">Labels are cut from lab leaf values (% dry matter). Adequate means value ≥ critical.</p>
+        </div>
+        <div class="panel" style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Nutrient</th>
+                <th>Critical</th>
+                <th>Deficient / Adequate</th>
+                <th>XGBoost accuracy</th>
+                <th>Balanced accuracy</th>
+                <th>Majority baseline</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nitrogen</td>
+                <td class="num">2.50%</td>
+                <td class="num">93 / 35</td>
+                <td class="num">66.4%</td>
+                <td class="num">54.6%</td>
+                <td class="num">72.7%</td>
+              </tr>
+              <tr>
+                <td>Phosphorus</td>
+                <td class="num">0.15%</td>
+                <td class="num">44 / 86</td>
+                <td class="num good">73.1%</td>
+                <td class="num">69.1%</td>
+                <td class="num">66.2%</td>
+              </tr>
+              <tr>
+                <td>Potassium</td>
+                <td class="num">1.00%</td>
+                <td class="num">114 / 21</td>
+                <td class="num">80.7%</td>
+                <td class="num">59.5%</td>
+                <td class="num">84.4%</td>
+              </tr>
+              <tr>
+                <td>Magnesium</td>
+                <td class="num">0.25%</td>
+                <td class="num">59 / 59</td>
+                <td class="num good">72.0%</td>
+                <td class="num good">72.0%</td>
+                <td class="num">50.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">
+          Potassium’s raw accuracy is inflated by class imbalance; balanced accuracy (~60%) is the fairer read.
+          Magnesium shows the clearest spectral signal (+22 percentage points over chance).
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Diagnostics</p>
+          <h2>Confusion matrices and mean spectra</h2>
+        </div>
+        <div class="grid-2">
+          <figure class="panel">
+            <h3>Nitrogen · confusion</h3>
+            <img src="assets/charts/cm_binary_nitrogen.png" alt="Nitrogen confusion matrix" />
+          </figure>
+          <figure class="panel">
+            <h3>Nitrogen · mean spectra</h3>
+            <img src="assets/charts/spectra_nitrogen.png" alt="Mean nitrogen spectra by critical class" />
+          </figure>
+          <figure class="panel">
+            <h3>Phosphorus · confusion</h3>
+            <img src="assets/charts/cm_binary_phosphorus.png" alt="Phosphorus confusion matrix" />
+          </figure>
+          <figure class="panel">
+            <h3>Phosphorus · mean spectra</h3>
+            <img src="assets/charts/spectra_phosphorus.png" alt="Mean phosphorus spectra by critical class" />
+          </figure>
+          <figure class="panel">
+            <h3>Potassium · confusion</h3>
+            <img src="assets/charts/cm_binary_potassium.png" alt="Potassium confusion matrix" />
+          </figure>
+          <figure class="panel">
+            <h3>Potassium · mean spectra</h3>
+            <img src="assets/charts/spectra_potassium.png" alt="Mean potassium spectra by critical class" />
+          </figure>
+          <figure class="panel">
+            <h3>Magnesium · confusion</h3>
+            <img src="assets/charts/cm_binary_magnesium.png" alt="Magnesium confusion matrix" />
+          </figure>
+          <figure class="panel">
+            <h3>Magnesium · mean spectra</h3>
+            <img src="assets/charts/spectra_magnesium.png" alt="Mean magnesium spectra by critical class" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Regression</p>
+          <h2>Continuous nutrient prediction</h2>
+          <p class="intro">Same spectra into an XGBoost regressor. Dotted lines mark each critical threshold.</p>
+        </div>
+        <div class="grid-2">
+          <figure class="panel">
+            <h3>Nitrogen · R² 0.35</h3>
+            <img src="assets/charts/scatter_nitrogen.png" alt="Nitrogen actual versus predicted" />
+          </figure>
+          <figure class="panel">
+            <h3>Phosphorus · R² 0.39</h3>
+            <img src="assets/charts/scatter_phosphorus.png" alt="Phosphorus actual versus predicted" />
+          </figure>
+          <figure class="panel">
+            <h3>Potassium · R² 0.45</h3>
+            <img src="assets/charts/scatter_potassium.png" alt="Potassium actual versus predicted" />
+          </figure>
+          <figure class="panel">
+            <h3>Magnesium · R² 0.42</h3>
+            <img src="assets/charts/scatter_magnesium.png" alt="Magnesium actual versus predicted" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Method</p>
+          <h2>How the status model is built</h2>
+        </div>
+        <div class="panel method">
+          <ol>
+            <li><strong>Data.</strong> Leaf spectroradiometer readings for N, P, K, and Mg (about 118–135 samples each), 325–1075&nbsp;nm.</li>
+            <li><strong>Labels.</strong> Binary status from critical thresholds: N 2.50%, P 0.15%, K 1.00%, Mg 0.25% dry matter.</li>
+            <li><strong>Features.</strong> SNV reflectance and SNV first derivative over the full spectrum and a NIR window (700–1075&nbsp;nm).</li>
+            <li><strong>Model.</strong> PCA (99% variance, inside each fold) + XGBoost, with class-weight adjustment.</li>
+            <li><strong>Validation.</strong> Stratified K-fold on original samples only.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Oil-palm leaf nutrient status from spectra · critical-threshold XGBoost.
+      Exploratory analytics page, not a peer-reviewed claim.
+    </div>
+  </footer>
+</body>
+</html>

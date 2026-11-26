@@ -1,0 +1,201 @@
+:root {
+  --paper: #f3f0e8;
+  --panel: #faf8f3;
+  --ink: #1c1915;
+  --muted: #5e584e;
+  --line: #ddd6c8;
+  --accent: #1d4a42;
+  --warm: #7a3e32;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--accent); text-underline-offset: 0.15em; }
+code {
+  font-family: Consolas, ui-monospace, monospace;
+  font-size: 0.9em;
+  background: color-mix(in srgb, var(--line) 45%, transparent);
+  padding: 0.05em 0.3em;
+  border-radius: 0.2rem;
+}
+.wrap { width: min(1080px, calc(100% - 2rem)); margin-inline: auto; }
+
+.top {
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+}
+.top-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0;
+}
+.back { text-decoration: none; font-size: 0.95rem; }
+.back:hover { text-decoration: underline; }
+.top-meta {
+  margin: 0;
+  font-family: Consolas, ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.page-head { padding: 2.75rem 0 1.5rem; }
+.kicker {
+  margin: 0 0 0.7rem;
+  font-family: Consolas, ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+h1, h2, h3 {
+  font-family: Georgia, "Iowan Old Style", Palatino, serif;
+  font-weight: 560;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  max-width: 16ch;
+}
+.lede {
+  margin: 1.1rem 0 0;
+  max-width: 62ch;
+  font-size: 1.12rem;
+  color: var(--muted);
+}
+
+section {
+  padding: 2.75rem 0;
+  border-top: 1px solid var(--line);
+}
+.section-head { margin-bottom: 1.35rem; }
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
+}
+.intro {
+  margin: 0.55rem 0 0;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.stats div {
+  padding: 1.1rem 1rem;
+  border-right: 1px solid var(--line);
+}
+.stats div:last-child { border-right: 0; }
+.stats strong {
+  display: block;
+  font-family: Georgia, "Iowan Old Style", Palatino, serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1;
+  color: var(--accent);
+}
+.stats span {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.grid-2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 820px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.panel {
+  margin: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 1rem;
+}
+.panel h3 {
+  margin: 0 0 0.7rem;
+  font-size: 1.05rem;
+}
+.panel figcaption, .note {
+  margin: 0.7rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.gallery {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.gallery img {
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: #ddd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+th, td {
+  padding: 0.7rem 0.55rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  font-family: Consolas, ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+}
+td.num { font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.good { color: var(--accent); font-weight: 600; }
+
+.method ol { margin: 0; padding-left: 1.15rem; color: var(--muted); }
+.method li { margin: 0.45rem 0; }
+.method li strong { color: var(--ink); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 1.75rem 0 2.5rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stats div { border-right: 0; border-bottom: 1px solid var(--line); }
+  .stats div:nth-child(odd) { border-right: 1px solid var(--line); }
+  .stats div:nth-last-child(-n+2) { border-bottom: 0; }
+  h1 { max-width: none; }
+}

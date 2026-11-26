@@ -1,0 +1,116 @@
+{
+  "task": "Classify oil-palm leaf nutrient status from spectra using critical thresholds",
+  "model": "XGBoostClassifier / XGBRegressor",
+  "features": "SNV reflectance + SNV 1st derivative (full 325\u20131075 nm and NIR 700\u20131075 nm)",
+  "validation": "Stratified K-fold CV on original samples only (no augmentation)",
+  "critical_levels_percent_dm": {
+    "Nitrogen": 2.5,
+    "Phosphorus": 0.15,
+    "Potassium": 1.0,
+    "Magnesium": 0.25
+  },
+  "results": [
+    {
+      "nutrient": "Nitrogen",
+      "critical": 2.5,
+      "note": "Frond-17 style critical N \u2248 2.50% dry matter",
+      "n_samples": 128,
+      "n_deficient": 93,
+      "n_adequate": 35,
+      "majority_baseline": 0.7265625,
+      "binary_accuracy": 0.6640625,
+      "balanced_accuracy": 0.5460829493087558,
+      "f1_adequate": 0.31746031746031744,
+      "lift_over_majority": -0.0625,
+      "regression_r2": 0.34504231948145914,
+      "regression_mae": 0.18706703727692364,
+      "within_10pct": 0.6640625,
+      "critical_from_regression_accuracy": 0.6875,
+      "value_range": [
+        1.554,
+        2.807
+      ],
+      "cv_folds": 5,
+      "wave_min": 325,
+      "wave_max": 1075
+    },
+    {
+      "nutrient": "Phosphorus",
+      "critical": 0.15,
+      "note": "Frond-17 style critical P \u2248 0.15% dry matter",
+      "n_samples": 130,
+      "n_deficient": 44,
+      "n_adequate": 86,
+      "majority_baseline": 0.6615384615384615,
+      "binary_accuracy": 0.7307692307692307,
+      "balanced_accuracy": 0.6910676532769556,
+      "f1_adequate": 0.8,
+      "lift_over_majority": 0.0692307692307692,
+      "regression_r2": 0.3865281326542448,
+      "regression_mae": 0.010859477378771855,
+      "within_10pct": 0.7461538461538462,
+      "critical_from_regression_accuracy": 0.7538461538461538,
+      "value_range": [
+        0.104,
+        0.18
+      ],
+      "cv_folds": 5,
+      "wave_min": 325,
+      "wave_max": 1075
+    },
+    {
+      "nutrient": "Potassium",
+      "critical": 1.0,
+      "note": "Frond-17 style critical K \u2248 1.00% dry matter",
+      "n_samples": 135,
+      "n_deficient": 114,
+      "n_adequate": 21,
+      "majority_baseline": 0.8444444444444444,
+      "binary_accuracy": 0.8074074074074075,
+      "balanced_accuracy": 0.5946115288220551,
+      "f1_adequate": 0.3157894736842105,
+      "lift_over_majority": -0.03703703703703698,
+      "regression_r2": 0.4530949411294902,
+      "regression_mae": 0.14862213084786022,
+      "within_10pct": 0.3111111111111111,
+      "critical_from_regression_accuracy": 0.8518518518518519,
+      "value_range": [
+        0.124,
+        1.207
+      ],
+      "cv_folds": 5,
+      "wave_min": 325,
+      "wave_max": 1075
+    },
+    {
+      "nutrient": "Magnesium",
+      "critical": 0.25,
+      "note": "Frond-17 style critical Mg \u2248 0.25% dry matter",
+      "n_samples": 118,
+      "n_deficient": 59,
+      "n_adequate": 59,
+      "majority_baseline": 0.5,
+      "binary_accuracy": 0.7203389830508474,
+      "balanced_accuracy": 0.7203389830508474,
+      "f1_adequate": 0.7226890756302521,
+      "lift_over_majority": 0.22033898305084743,
+      "regression_r2": 0.4202175098971458,
+      "regression_mae": 0.04667945177979388,
+      "within_10pct": 0.3728813559322034,
+      "critical_from_regression_accuracy": 0.7796610169491526,
+      "value_range": [
+        0.087,
+        0.404
+      ],
+      "cv_folds": 5,
+      "wave_min": 325,
+      "wave_max": 1075
+    }
+  ],
+  "mean_binary_accuracy": 0.7306445303068714,
+  "mean_balanced_accuracy": 0.6380252786146534,
+  "mean_majority_baseline": 0.6831363514957265,
+  "mean_r2": 0.401220725790585,
+  "meets_90_target": false,
+  "comment": "With ~120\u2013135 original leaf spectra per nutrient and honest cross-validation, binary status against critical thresholds reaches the mid-70% to mid-80% range. A 90%+ claim is not supported without larger independent samples or leakage-prone augmentation."
+}

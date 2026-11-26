@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sugarcane TCH Forecast</title>
+  <meta name="description" content="Walk-forward Sentinel-2 forecast of sugarcane yield (TCH) with about 10% MAPE using PLS-1 drought features." />
+  <link rel="stylesheet" href="../showcase.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="back" href="../showcases.html">← Live showcases</a>
+      <p class="top-meta">Prototype · 2025</p>
+    </div>
+  </header>
+
+  <header class="page-head">
+    <div class="wrap">
+      <p class="kicker">Remote sensing · yield forecast</p>
+      <h1>Sugarcane TCH forecast</h1>
+      <p class="lede">
+        Walk-forward forecast of tonnes of cane per hectare (TCH) from Sentinel-2 L2A,
+        using a one-component PLS model and mid-season drought signals.
+        Typical error is about 10% MAPE on harvest years 2021–2025.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Results</p>
+          <h2>Cross-validated performance</h2>
+          <p class="intro">Accuracy is reported as 100 − MAPE from walk-forward tests (train on earlier harvests, test on year T).</p>
+        </div>
+        <div class="stats">
+          <div><strong>~91%</strong><span>Weighted accuracy 2021–2025<br/>MAPE 9.4%</span></div>
+          <div><strong>~10%</strong><span>Typical forecast error<br/>technical target</span></div>
+          <div><strong>90%</strong><span>Drought year 2025<br/>MAPE 10.2%</span></div>
+        </div>
+        <figure class="panel">
+          <img src="assets/charts/kpi_banner.png" alt="KPI banner for sugarcane forecast accuracy and MAPE" />
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Charts</p>
+          <h2>Forecast diagnostics</h2>
+          <p class="intro">Model: PLSRegression (1 component). Features: <code>dry_frac</code>, <code>b04_mean</code>, <code>mid_cire</code> from Sentinel-2 L2A.</p>
+        </div>
+        <div class="grid-2">
+          <figure class="panel">
+            <h3>Accuracy by harvest year</h3>
+            <img src="assets/charts/accuracy_by_year.png" alt="Bar chart of accuracy by harvest year near 90 percent" />
+            <figcaption>Walk-forward PLS-1 · accuracy = 100 − MAPE</figcaption>
+          </figure>
+          <figure class="panel">
+            <h3>MAPE by year</h3>
+            <img src="assets/charts/mape_by_year.png" alt="Bar chart of MAPE by year around 10 percent" />
+            <figcaption>Dashed line marks the ~10% error target</figcaption>
+          </figure>
+          <figure class="panel">
+            <h3>Actual vs predicted · all test years</h3>
+            <img src="assets/charts/scatter_all_years.png" alt="Scatter of actual versus predicted TCH for all test years" />
+            <figcaption>Points near the diagonal are accurate forecasts</figcaption>
+          </figure>
+          <figure class="panel">
+            <h3>Focus 2025 · drought year</h3>
+            <img src="assets/charts/scatter_2025.png" alt="Scatter of 2025 actual versus predicted TCH" />
+            <figcaption>MAPE 2025 = 10.2% · accuracy ≈ 89.8%</figcaption>
+          </figure>
+        </div>
+        <figure class="panel" style="margin-top:1.25rem;">
+          <h3>Drought-signal shift 2021–24 → 2025</h3>
+          <img src="assets/charts/feature_shift_2025.png" alt="Feature shift for dry_frac, B04, and mid_cire in 2025" />
+          <figcaption>
+            dry_frac and B04 rise, mid_cire falls — TCH drops by about 33 t/ha.
+            Mid-season features hold up better than peak NDVI.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Table</p>
+          <h2>Walk-forward MAPE</h2>
+        </div>
+        <div class="panel" style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Test year</th>
+                <th>Train n</th>
+                <th>Test n</th>
+                <th>MAPE</th>
+                <th>Accuracy (100−MAPE)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2021</td><td class="num">8</td><td class="num">6</td><td class="num">12.3%</td><td class="num">87.7%</td></tr>
+              <tr><td>2022</td><td class="num">14</td><td class="num">6</td><td class="num">8.7%</td><td class="num good">91.3%</td></tr>
+              <tr><td>2023</td><td class="num">20</td><td class="num">8</td><td class="num">6.0%</td><td class="num good">94.0%</td></tr>
+              <tr><td>2024</td><td class="num">28</td><td class="num">12</td><td class="num">9.8%</td><td class="num good">90.2%</td></tr>
+              <tr><td>2025</td><td class="num">40</td><td class="num">12</td><td class="num">10.2%</td><td class="num good">89.8%</td></tr>
+              <tr>
+                <td><strong>2021–2025 (weighted)</strong></td>
+                <td class="num">—</td><td class="num">44</td>
+                <td class="num"><strong>9.4%</strong></td>
+                <td class="num good"><strong>~90.6%</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Imagery</p>
+          <h2>Sentinel-2 plot examples</h2>
+          <p class="intro">RGB crops (B04–B03–B02) from L2A scenes used to build the drought signal across planting–harvest cycles in north-east São Paulo, Brazil.</p>
+        </div>
+        <div class="gallery">
+          <figure class="panel">
+            <img src="assets/images/rgb_plot5_vigor.png" alt="Sentinel-2 RGB of plot 5 with vigorous canopy" />
+            <figcaption>Plot 5 — vigorous canopy</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/images/rgb_plot17_mid_green.png" alt="Sentinel-2 RGB of plot 17 mid cycle" />
+            <figcaption>Plot 17 — mid cycle</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/images/rgb_plot17_2024_11.png" alt="Sentinel-2 RGB of plot 17 late 2024" />
+            <figcaption>Plot 17 — path to 2025 harvest</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/images/rgb_plot9_drought.png" alt="Sentinel-2 RGB of plot 9 in a drought window" />
+            <figcaption>Plot 9 — Aug 2024 drought window</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/images/rgb_plot31_stress.png" alt="Sentinel-2 RGB of plot 31 under canopy stress" />
+            <figcaption>Plot 31 — canopy stress</figcaption>
+          </figure>
+          <figure class="panel">
+            <img src="assets/images/rgb_plot55_2025.png" alt="Sentinel-2 RGB of plot 55 in January 2025" />
+            <figcaption>Plot 55 — Jan 2025</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Method</p>
+          <h2>How the forecast is built</h2>
+        </div>
+        <div class="panel method">
+          <ol>
+            <li><strong>Data.</strong> 12 commercial plots, 52 harvest cycles (2017–2025), Sentinel-2 L2A crops per plot.</li>
+            <li><strong>Scenes.</strong> Deduplicated by <code>(plot, product_id)</code>; sensing time from scene metadata.</li>
+            <li><strong>Cycle features.</strong> dry_frac (share of NDMI&lt;0), b04_mean, mid_cire (CIre at crop age 90–240 days).</li>
+            <li><strong>Model.</strong> StandardScaler + PLSRegression with one component.</li>
+            <li><strong>Validation.</strong> Walk-forward by harvest year, not random k-fold.</li>
+            <li><strong>Key result.</strong> Weighted MAPE ≈ 9.4% → effective accuracy ≈ 90%.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Sugarcane TCH forecast from Sentinel-2 · north-east São Paulo, Brazil.
+      Figures from the project walk-forward PLS-1 runs. Exploratory analytics page, not a peer-reviewed paper.
+    </div>
+  </footer>
+</body>
+</html>

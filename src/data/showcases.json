@@ -6,10 +6,48 @@
     "domain": "Life Science & Environmental Analytics",
     "status": "Prototype",
     "year": "2026",
-    "technologies": ["Geospatial Analytics", "Climate Data", "WebGIS"],
+    "technologies": [
+      "Geospatial Analytics",
+      "Climate Data",
+      "WebGIS"
+    ],
     "image": "images/analysis/agronomic-intelligence.jpg",
     "demoUrl": "https://alfasisurya.github.io/agronomic-intelligence/",
     "repoUrl": "https://github.com/Alfasisurya/agronomic-intelligence",
     "featured": true
+  },
+  {
+    "id": "sugarcane-tch-forecast",
+    "title": "Sugarcane TCH Forecast",
+    "description": "Walk-forward Sentinel-2 forecast of tonnes of cane per hectare with about 10% MAPE using a one-component PLS model and mid-season drought signals.",
+    "domain": "Life Science & Environmental Analytics",
+    "status": "Prototype",
+    "year": "2025",
+    "technologies": [
+      "Remote Sensing",
+      "PLS",
+      "Yield Forecast"
+    ],
+    "image": "images/showcases/sugarcane-tch.png",
+    "demoUrl": "showcases/sugarcane/index.html",
+    "repoUrl": "",
+    "featured": false
+  },
+  {
+    "id": "oilpalm-leaf-nutrient",
+    "title": "Oil Palm Leaf Nutrient Status",
+    "description": "XGBoost classification of leaf N, P, K, and Mg status from 325\u20131075 nm spectra against oil-palm critical thresholds, with 66\u201381% cross-validated accuracy.",
+    "domain": "Chemistry & Spectral Intelligence",
+    "status": "Prototype",
+    "year": "2026",
+    "technologies": [
+      "Spectroscopy",
+      "XGBoost",
+      "Chemometrics"
+    ],
+    "image": "images/showcases/oilpalm-nutrient.png",
+    "demoUrl": "showcases/oilpalm/index.html",
+    "repoUrl": "",
+    "featured": false
   }
 ]

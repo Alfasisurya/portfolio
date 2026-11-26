@@ -1,0 +1,7 @@
+file,caption,source_tif
+rgb_plot17_mid_green.png,Plot 17 · mid-cycle canopy (RGB),talh17_data16_03_2023_L2A.tif
+rgb_plot17_2024_11.png,Plot 17 · Nov 2024 (pre-harvest cycle),talh17_data16_08_2024_L2A.tif
+rgb_plot9_drought.png,Plot 9 · Aug 2024 drought window (RGB),talh9_data16_08_2024_L2A.tif
+rgb_plot31_stress.png,Plot 31 · Sep 2024 stress window (RGB),talh31_data16_08_2024_L2A.tif
+rgb_plot5_vigor.png,Plot 5 · vigorous season example (RGB),talh5_data16_05_2022_L2A.tif
+rgb_plot55_2025.png,Plot 55 · Jan 2025 (best 2025 MAPE cohort),talh55_data18_01_2025_L2A.tif

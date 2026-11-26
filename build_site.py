@@ -299,11 +299,13 @@ def sort_showcases(items):
 
 def showcase_actions(item):
     actions = []
-    if item.get("demoUrl"):
-        actions.append(
-            f'<a class="btn btn-primary" href="{esc(item["demoUrl"])}" target="_blank" rel="noopener">'
-            f'Open live demo <span class="sr-only">(opens in a new tab)</span></a>'
-        )
+    demo = item.get("demoUrl") or ""
+    if demo:
+        external = demo.startswith("http://") or demo.startswith("https://")
+        attrs = ' target="_blank" rel="noopener"' if external else ""
+        label = "Open live demo" if external else "Open showcase"
+        suffix = ' <span class="sr-only">(opens in a new tab)</span>' if external else ""
+        actions.append(f'<a class="btn btn-primary" href="{esc(demo)}"{attrs}>{label}{suffix}</a>')
     if item.get("repoUrl"):
         actions.append(
             f'<a class="btn btn-secondary" href="{esc(item["repoUrl"])}" target="_blank" rel="noopener">'
@@ -509,7 +511,8 @@ def build():
         <p class="kicker">Live demonstrations</p>
         <h2>From research to a working tool</h2>
       </div>
-      {showcase_cards(featured_showcases, 0)}
+      {showcase_cards(showcases, 0)}
+      <p class="more"><a href="showcases.html">All live showcases →</a></p>
     </div></section>
 
     <section class="section"><div class="wrap">
